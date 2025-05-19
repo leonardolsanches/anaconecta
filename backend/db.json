@@ -1,0 +1,40 @@
+{
+  "iniciativas": [
+    {
+      "id": 1,
+      "tipo": "podcast",
+      "titulo": "Ep #05 - Minha jornada em RH com Patrícia Rocha",
+      "status": "faturado",
+      "valor": 500,
+      "profissional": "Patrícia Rocha",
+      "categoria": "RH"
+    },
+    {
+      "id": 2,
+      "tipo": "mentoria",
+      "titulo": "Planejamento Financeiro com Silze Takano",
+      "status": "pendente",
+      "valor": 450,
+      "profissional": "Silze Takano",
+      "categoria": "Finanças"
+    },
+    {
+      "id": 3,
+      "tipo": "evento",
+      "titulo": "Expo Franchising ABF RIO 2024",
+      "status": "proposta_enviada",
+      "valor": 300,
+      "profissional": "Grupo Impettus",
+      "categoria": "Eventos"
+    },
+    {
+      "id": 4,
+      "tipo": "podcast",
+      "titulo": "Ep #03 - Outubro Rosa",
+      "status": "gratuito",
+      "valor": 0,
+      "profissional": "Valesca Félix",
+      "categoria": "Saúde"
+    }
+  ]
+}
