@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Propostas</title></head>
+<body>
+  <h2>Propostas</h2>
+  <ul id="lista-propostas"></ul>
+  <script>
+fetch('/api/propostas')
+  .then(res => res.json())
+  .then(data => {
+    const ul = document.getElementById('lista-propostas');
+    data.forEach(p => {
+      ul.innerHTML += `<li>${p.titulo} - ${p.cliente} - ${p.status} - R$ ${p.valor}</li>`;
+    });
+  });
+  </script>
+</body>
+</html>
