@@ -1,22 +1,27 @@
 #!/usr/bin/env python3
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify
 from flask_cors import CORS
 import json
 import os
 
-app = Flask(__name__, static_folder="../frontend", template_folder="../frontend")
+app = Flask(__name__)
 CORS(app)
+
+DATA_FILE = 'ana-conecta/backend/db.json'
+
+def load_data():
+    with open(DATA_FILE, 'r') as f:
+        return json.load(f)
 
 @app.route('/api/iniciativas', methods=['GET'])
 def get_iniciativas():
-    with open('db.json') as f:
-        data = json.load(f)
+    data = load_data()
     return jsonify(data['iniciativas'])
 
-@app.route('/')
-@app.route('/<path:path>')
-def serve_frontend(path="index.html"):
-    return send_from_directory(app.static_folder, path)
+@app.route('/api/propostas', methods=['GET'])
+def get_propostas():
+    data = load_data()
+    return jsonify(data['propostas'])
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8080))
