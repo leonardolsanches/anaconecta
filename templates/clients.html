@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}Ana Conecta - Clientes{% endblock %}
+
+{% block content %}
+<div class="page-header d-flex justify-content-between align-items-center">
+    <div>
+        <h1>Gestão de Clientes</h1>
+        <p class="lead">Gerencie seus prospects, clientes ativos e concluídos.</p>
+    </div>
+    <button class="btn btn-primary" onclick="showNewClientModal()">
+        <i class="fas fa-user-plus"></i> Novo Cliente
+    </button>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h5 class="mb-0">Filtros</h5>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group mb-0">
+                    <select id="client-filter" class="form-control">
+                        <option value="">Todos os status</option>
+                        <option value="prospect">Prospects</option>
+                        <option value="active">Ativos</option>
+                        <option value="completed">Concluídos</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Telefone</th>
+                        <th>Status</th>
+                        <th>Data de Cadastro</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="clients-table-body">
+                    <!-- Client rows will be inserted here by JavaScript -->
+                    <tr>
+                        <td colspan="6" class="text-center">Carregando clientes...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Client Modal -->
+<div class="modal fade" id="clientModal" tabindex="-1" aria-labelledby="clientModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="clientModalLabel">Novo Cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="client-form">
+                    <div class="form-group">
+                        <label for="client-name">Nome</label>
+                        <input type="text" class="form-control" id="client-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="client-email">Email</label>
+                        <input type="email" class="form-control" id="client-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="client-phone">Telefone</label>
+                        <input type="tel" class="form-control" id="client-phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="client-status">Status</label>
+                        <select class="form-control" id="client-status">
+                            <option value="prospect">Prospect</option>
+                            <option value="active">Ativo</option>
+                            <option value="completed">Concluído</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="client-notes">Observações</label>
+                        <textarea class="form-control" id="client-notes" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" form="client-form" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/clients.js') }}"></script>
+{% endblock %}

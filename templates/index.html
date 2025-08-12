@@ -1,0 +1,283 @@
+{% extends 'base.html' %}
+
+{% block title %}Ana Conecta - Dashboard{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="row">
+        <div class="col-md-8">
+            <h1>Ana Conecta - Dashboard</h1>
+            <p class="lead">Bem-vindo ao sistema de gerenciamento de mentorias e iniciativas.</p>
+        </div>
+        <div class="col-md-4 text-right">
+            <img src="{{ url_for('static', filename='img/ana-rosa-profile.svg') }}" alt="Ana Rosa Marcuartú" class="img-fluid rounded-circle mb-2" style="max-width: 80px;">
+            <p class="mb-0"><strong>Ana Rosa Marcuartú</strong><br>
+            <small>Mentora de Carreira e Desenvolvimento</small></p>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0">Resumo de Clientes</h5>
+            </div>
+            <div class="card-body">
+                <div class="stats-card">
+                    <h2 id="total-clients">0</h2>
+                    <p>Total de Clientes</p>
+                </div>
+                <hr>
+                <div class="row text-center">
+                    <div class="col-4">
+                        <h4 id="prospect-clients">0</h4>
+                        <p class="small">Prospects</p>
+                    </div>
+                    <div class="col-4">
+                        <h4 id="active-clients">0</h4>
+                        <p class="small">Ativos</p>
+                    </div>
+                    <div class="col-4">
+                        <h4 id="completed-clients">0</h4>
+                        <p class="small">Concluídos</p>
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <a href="/clients" class="btn btn-outline-primary">Gerenciar Clientes</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0">Resumo de Iniciativas</h5>
+            </div>
+            <div class="card-body">
+                <div class="stats-card">
+                    <h2 id="total-initiatives">0</h2>
+                    <p>Total de Iniciativas</p>
+                </div>
+                <hr>
+                <div class="row text-center">
+                    <div class="col-4">
+                        <h4 id="pending-initiatives">0</h4>
+                        <p class="small">Pendentes</p>
+                    </div>
+                    <div class="col-4">
+                        <h4 id="inprogress-initiatives">0</h4>
+                        <p class="small">Em Progresso</p>
+                    </div>
+                    <div class="col-4">
+                        <h4 id="completed-initiatives">0</h4>
+                        <p class="small">Concluídas</p>
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <a href="/initiatives" class="btn btn-outline-primary">Gerenciar Iniciativas</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0">Resumo de Mentorias</h5>
+            </div>
+            <div class="card-body">
+                <div class="stats-card">
+                    <h2 id="total-mentorships">0</h2>
+                    <p>Total de Mentorias</p>
+                </div>
+                <hr>
+                <div class="row text-center small">
+                    <div class="col-4">
+                        <h4 id="initial-mentorships">0</h4>
+                        <p class="small">Contato Inicial</p>
+                    </div>
+                    <div class="col-4">
+                        <h4 id="proposal-mentorships">0</h4>
+                        <p class="small">Proposta</p>
+                    </div>
+                    <div class="col-4">
+                        <h4 id="contract-mentorships">0</h4>
+                        <p class="small">Contrato</p>
+                    </div>
+                </div>
+                <div class="row text-center mt-2 small">
+                    <div class="col-6">
+                        <h4 id="inprogress-mentorships">0</h4>
+                        <p class="small">Em Progresso</p>
+                    </div>
+                    <div class="col-6">
+                        <h4 id="completed-mentorships">0</h4>
+                        <p class="small">Concluídas</p>
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <a href="/mentorships" class="btn btn-outline-primary">Gerenciar Mentorias</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Fluxo de Mentoria</h5>
+            </div>
+            <div class="card-body">
+                <div class="workflow-diagram">
+                    <div class="row text-center">
+                        <div class="col-12">
+                            <p><strong>Processo Simplificado de Mentoria</strong></p>
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col">
+                            <div class="p-2 mb-2 bg-light rounded">
+                                <i class="fas fa-handshake fa-2x text-warning mb-2"></i>
+                                <p class="mb-0">Contato Inicial</p>
+                                <small>via WhatsApp, Google Agenda e Meet</small>
+                            </div>
+                        </div>
+                        <div class="col-1 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                        <div class="col">
+                            <div class="p-2 mb-2 bg-light rounded">
+                                <i class="fas fa-file-contract fa-2x text-primary mb-2"></i>
+                                <p class="mb-0">Proposta</p>
+                                <small>Do Canva/Google Docs para WhatsApp e Gmail</small>
+                            </div>
+                        </div>
+                        <div class="col-1 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                        <div class="col">
+                            <div class="p-2 mb-2 bg-light rounded">
+                                <i class="fas fa-file-signature fa-2x text-success mb-2"></i>
+                                <p class="mb-0">Contrato</p>
+                                <small>Do Google Docs para WhatsApp e Gmail</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row text-center mt-2">
+                        <div class="col">
+                            <div class="p-2 mb-2 bg-light rounded">
+                                <i class="fas fa-sync fa-2x text-info mb-2"></i>
+                                <p class="mb-0">Retorno como Prospect</p>
+                                <small>Para novos serviços</small>
+                            </div>
+                        </div>
+                        <div class="col-1 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-arrow-left"></i>
+                        </div>
+                        <div class="col">
+                            <div class="p-2 mb-2 bg-light rounded">
+                                <i class="fas fa-file-invoice fa-2x text-secondary mb-2"></i>
+                                <p class="mb-0">Recibos</p>
+                                <small>Do Canva/Google Docs para WhatsApp e Gmail</small>
+                            </div>
+                        </div>
+                        <div class="col-1 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-arrow-left"></i>
+                        </div>
+                        <div class="col">
+                            <div class="p-2 mb-2 bg-light rounded">
+                                <i class="fas fa-chalkboard-teacher fa-2x text-danger mb-2"></i>
+                                <p class="mb-0">Sessões</p>
+                                <small>Do Canva/Google Docs para WhatsApp e Gmail</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Ações Rápidas</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="d-grid">
+                            <button onclick="window.location.href='/clients'" class="btn btn-lg btn-outline-primary btn-block">
+                                <i class="fas fa-user-plus mb-2"></i>
+                                <div>Novo Cliente</div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="d-grid">
+                            <button onclick="window.location.href='/services'" class="btn btn-lg btn-outline-info btn-block">
+                                <i class="fas fa-briefcase mb-2"></i>
+                                <div>Serviços Oferecidos</div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="d-grid">
+                            <button onclick="window.location.href='/initiatives'" class="btn btn-lg btn-outline-secondary btn-block">
+                                <i class="fas fa-lightbulb mb-2"></i>
+                                <div>Nova Iniciativa</div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="d-grid">
+                            <button onclick="window.location.href='/mentorships'" class="btn btn-lg btn-outline-success btn-block">
+                                <i class="fas fa-chalkboard-teacher mb-2"></i>
+                                <div>Nova Mentoria</div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="d-grid">
+                            <a href="https://calendar.google.com/" target="_blank" class="btn btn-lg btn-outline-info btn-block">
+                                <i class="far fa-calendar-alt mb-2"></i>
+                                <div>Google Agenda</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <h6 class="font-weight-bold mb-3">Links Úteis:</h6>
+                <div class="list-group mb-3">
+                    <a href="https://www.canva.com/" target="_blank" class="list-group-item list-group-item-action d-flex align-items-center">
+                        <i class="fas fa-palette mr-3"></i> Canva - Criação de documentos e conteúdos
+                    </a>
+                    <a href="https://docs.google.com/" target="_blank" class="list-group-item list-group-item-action d-flex align-items-center">
+                        <i class="fas fa-file-alt mr-3"></i> Google Docs - Documentos e contratos
+                    </a>
+                    <a href="https://web.whatsapp.com/" target="_blank" class="list-group-item list-group-item-action d-flex align-items-center">
+                        <i class="fab fa-whatsapp mr-3"></i> WhatsApp Web - Comunicação com clientes
+                    </a>
+                    <a href="https://meet.google.com/" target="_blank" class="list-group-item list-group-item-action d-flex align-items-center">
+                        <i class="fas fa-video mr-3"></i> Google Meet - Reuniões online
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Load dashboard stats
+    getDashboardStats();
+});
+</script>
+{% endblock %}

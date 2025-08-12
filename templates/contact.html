@@ -1,0 +1,279 @@
+{% extends 'public_base.html' %}
+
+{% block title %}Ana Conecta - Contato{% endblock %}
+
+{% block head_extra %}
+<style>
+    .contact-info-icon {
+        width: 50px;
+        height: 50px;
+        background-color: rgba(52, 152, 219, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        color: var(--primary-color);
+        margin-right: 15px;
+    }
+    
+    .contact-card {
+        transition: transform 0.3s;
+    }
+    
+    .contact-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="mb-3">Entre em Contato</h1>
+                <p class="lead mb-0">Estou à disposição para ajudar em seu desenvolvimento pessoal e profissional.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Information -->
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 contact-card">
+                    <div class="card-body d-flex">
+                        <div class="contact-info-icon">
+                            <i class="far fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h5>Email</h5>
+                            <p class="mb-0">contato@anaconecta.com.br</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 contact-card">
+                    <div class="card-body d-flex">
+                        <div class="contact-info-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div>
+                            <h5>WhatsApp</h5>
+                            <p class="mb-0"><a href="https://wa.me/55981130624" target="_blank" style="color: inherit; text-decoration: none;">+55 21 98113-0624</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 contact-card">
+                    <div class="card-body d-flex">
+                        <div class="contact-info-icon">
+                            <i class="fab fa-linkedin-in"></i>
+                        </div>
+                        <div>
+                            <h5>LinkedIn</h5>
+                            <p class="mb-0">anarosamarcuartu</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <h3 class="mb-4">Envie uma Mensagem</h3>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Nome Completo*</label>
+                        <input type="text" class="form-control" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email*</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Telefone</label>
+                        <input type="tel" class="form-control" id="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Assunto*</label>
+                        <select class="form-control" id="subject" required>
+                            <option value="">Selecione um assunto</option>
+                            <option value="Mentoria Individual">Mentoria Individual</option>
+                            <option value="Mentoria em Grupo">Mentoria em Grupo</option>
+                            <option value="Palestras e Workshops">Palestras e Workshops</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Mensagem*</label>
+                        <textarea class="form-control" id="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg">Enviar Mensagem</button>
+                </form>
+            </div>
+            
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-12 mb-4">
+                        <h3 class="mb-4">Agende uma Chamada</h3>
+                        <p>Prefere conversar diretamente? Agende uma chamada de 30 minutos para discutirmos suas necessidades e como posso ajudar.</p>
+                        <a href="https://calendly.com/anaconecta/30min" target="_blank" class="btn btn-outline-primary">
+                            <i class="far fa-calendar-alt mr-2"></i>Agendar Chamada
+                        </a>
+                    </div>
+                    
+                    <div class="col-12">
+                        <div class="card border-0 bg-light">
+                            <div class="card-body p-4">
+                                <div class="d-flex align-items-center mb-4">
+                                    <img src="{{ url_for('static', filename='img/ana-profile-photo.png') }}" alt="Ana Rosa Marcuartú" class="profile-photo mini mr-3">
+                                    <div>
+                                        <h5 class="mb-0">Ana Rosa Marcuartú</h5>
+                                        <p class="mb-0 text-muted">Mentora de Carreira e Desenvolvimento</p>
+                                    </div>
+                                </div>
+                                <p>"Estou ansiosa para conhecer sua história e ver como posso contribuir para seu desenvolvimento pessoal e profissional. Cada jornada é única, e estou aqui para apoiá-lo(a) em cada passo do caminho."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">Perguntas Frequentes</h2>
+            <p class="lead">Tire suas dúvidas sobre os serviços oferecidos</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="accordion" id="faqAccordion">
+                    <div class="card mb-3">
+                        <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne">
+                                    Como funciona a mentoria individual?
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseOne" class="collapse show" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                A mentoria individual é um processo personalizado que começa com uma conversa inicial para entender suas necessidades e objetivos. A partir daí, desenvolvemos um plano de ação com sessões regulares (geralmente quinzenais) para trabalhar aspectos específicos do seu desenvolvimento profissional. O programa pode durar de 3 a 6 meses, dependendo dos objetivos estabelecidos.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-header" id="headingTwo">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo">
+                                    Quais são os temas abordados nas mentorias?
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseTwo" class="collapse" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                Os temas variam de acordo com suas necessidades específicas, mas geralmente incluem: desenvolvimento de carreira, liderança, comunicação eficaz, gestão de equipes, transição de carreira, equilíbrio entre vida pessoal e profissional, produtividade e organização, networking estratégico, e preparação para novos desafios profissionais.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-header" id="headingThree">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree">
+                                    Qual é o investimento para os serviços?
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseThree" class="collapse" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                O investimento varia de acordo com o tipo de serviço e duração do programa. Para mentorias individuais, trabalhamos com programas a partir de R$ 1.500,00 mensais. Mentorias em grupo têm valores reduzidos por participante. Para palestras e workshops, o valor depende da duração e formato (presencial ou online). Entre em contato para receber uma proposta personalizada.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-header" id="headingFour">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFour">
+                                    As sessões são presenciais ou online?
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseFour" class="collapse" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                Trabalhamos com ambos os formatos. As mentorias podem ser realizadas online (via Zoom ou Google Meet) ou presencialmente em São Paulo, dependendo da sua preferência e disponibilidade. Muitos clientes optam pelo formato online pela praticidade e flexibilidade de horários.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Success Message Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Mensagem Enviada!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <i class="fas fa-check-circle text-success fa-4x mb-3"></i>
+                <p>Sua mensagem foi enviada com sucesso.</p>
+                <p>Retornarei seu contato em até 48 horas úteis.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const contactForm = document.getElementById('contactForm');
+        
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                // Aqui seria a lógica para enviar o formulário via AJAX
+                // Por enquanto, apenas simulamos o sucesso
+                
+                // Exibir modal de sucesso
+                $('#successModal').modal('show');
+                
+                // Limpar formulário
+                contactForm.reset();
+            });
+        }
+    });
+</script>
+{% endblock %}

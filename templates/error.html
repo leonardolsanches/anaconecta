@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Ana Conecta - Erro{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Erro no Sistema</h4>
+                </div>
+                <div class="card-body">
+                    <img src="{{ url_for('static', filename='img/ana-rosa-profile.svg') }}" alt="Ana Rosa Marcuartú" class="img-fluid rounded-circle mb-4" style="max-width: 120px;">
+                    
+                    <h5 class="text-danger mb-4">Lamentamos o inconveniente!</h5>
+                    
+                    <p class="mb-4">Ocorreu um erro durante o processamento da sua solicitação. Nossa equipe técnica já foi notificada e está trabalhando para resolver o problema o mais rápido possível.</p>
+                    
+                    {% if error %}
+                    <div class="alert alert-secondary">
+                        <small class="text-muted">Detalhes técnicos: {{ error }}</small>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="mt-4">
+                        <a href="/" class="btn btn-outline-secondary mr-2">
+                            <i class="fas fa-home"></i> Voltar para Início
+                        </a>
+                        <a href="/services" class="btn btn-primary">
+                            <i class="fas fa-briefcase"></i> Ver Serviços Oferecidos
+                        </a>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <p class="mb-0">Se o problema persistir, entre em contato conosco pelo e-mail: suporte@anaconecta.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

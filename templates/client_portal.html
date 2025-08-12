@@ -1,0 +1,881 @@
+{% extends 'public_base.html' %}
+
+{% block title %}Ana Conecta - Portal do Cliente{% endblock %}
+
+{% block head_extra %}
+<style>
+    .portal-header {
+        background-color: var(--primary-color);
+        padding: 50px 0;
+        color: white;
+    }
+    
+    .service-status {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+    }
+    
+    .status-initial_contact {
+        background-color: #e3f2fd;
+        color: #1565c0;
+    }
+    
+    .status-proposal_sent {
+        background-color: #fff8e1;
+        color: #ff8f00;
+    }
+    
+    .status-contract_signed {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+    }
+    
+    .status-in_progress {
+        background-color: #ede7f6;
+        color: #5e35b1;
+    }
+    
+    .status-completed {
+        background-color: #e0f2f1;
+        color: #00695c;
+    }
+    
+    .service-detail-header {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: var(--border-radius);
+        margin-bottom: 20px;
+    }
+    
+    .timeline-container {
+        position: relative;
+        margin-top: 30px;
+        padding-left: 30px;
+    }
+    
+    .timeline-container:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background-color: var(--primary-color);
+    }
+    
+    .timeline-item {
+        position: relative;
+        margin-bottom: 25px;
+    }
+    
+    .timeline-item:before {
+        content: '';
+        position: absolute;
+        left: -37px;
+        top: 5px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        border: 2px solid white;
+        box-shadow: 0 0 0 2px var(--primary-color);
+    }
+    
+    .timeline-date {
+        font-size: 0.85rem;
+        color: #6c757d;
+        margin-bottom: 5px;
+    }
+    
+    .timeline-content {
+        padding: 15px;
+        background-color: white;
+        border-radius: var(--border-radius);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    
+    .scope-item {
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: var(--border-radius);
+    }
+    
+    .chat-container {
+        height: 400px;
+        overflow-y: auto;
+        border: 1px solid #e9ecef;
+        border-radius: var(--border-radius);
+        background-color: #f8f9fa;
+        margin-bottom: 15px;
+        padding: 15px;
+    }
+    
+    .chat-message {
+        margin-bottom: 15px;
+        display: flex;
+    }
+    
+    .chat-message.self {
+        flex-direction: row-reverse;
+    }
+    
+    .chat-bubble {
+        max-width: 80%;
+        padding: 10px 15px;
+        border-radius: 18px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .chat-message.other .chat-bubble {
+        background-color: white;
+        border: 1px solid #e9ecef;
+        border-top-left-radius: 4px;
+    }
+    
+    .chat-message.self .chat-bubble {
+        background-color: var(--primary-color);
+        color: white;
+        border-top-right-radius: 4px;
+    }
+    
+    .chat-time {
+        font-size: 0.7rem;
+        color: #6c757d;
+        margin-top: 5px;
+    }
+    
+    .payment-card {
+        border: 1px solid #e9ecef;
+        border-radius: var(--border-radius);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .payment-status {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        padding: 3px 8px;
+        border-radius: 12px;
+    }
+    
+    .payment-status.pending {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+    
+    .payment-status.paid {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    
+    .meeting-card {
+        margin-bottom: 15px;
+        transition: transform 0.3s;
+    }
+    
+    .meeting-card:hover {
+        transform: translateY(-3px);
+    }
+    
+    .document-card {
+        transition: transform 0.3s;
+    }
+    
+    .document-card:hover {
+        transform: translateY(-3px);
+    }
+    
+    .document-icon {
+        font-size: 2rem;
+        margin-bottom: 15px;
+    }
+    
+    .document-pdf {
+        color: #dc3545;
+    }
+    
+    .document-doc {
+        color: #007bff;
+    }
+    
+    .document-other {
+        color: #6c757d;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Portal Header -->
+<section class="portal-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="mb-2">Portal do Cliente</h1>
+                <p class="lead mb-0">Acompanhe seus serviços e mentoria com a Ana Conecta</p>
+            </div>
+            <div class="col-lg-4 text-lg-right mt-4 mt-lg-0">
+                <a href="#" class="btn btn-light" data-toggle="modal" data-target="#requestServiceModal">
+                    <i class="fas fa-plus mr-2"></i>Solicitar Novo Serviço
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Portal Content -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3 mb-4 mb-lg-0">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <img src="{{ url_for('static', filename='img/ana-profile-photo.png') }}" alt="Ana Rosa Marcuartú" class="profile-photo small mb-3">
+                        <h5>Bem-vindo(a)!</h5>
+                        <p class="text-muted mb-4">Acesse seus serviços e acompanhe o progresso da sua mentoria.</p>
+                        
+                        <div class="list-group list-group-flush">
+                            <a href="#services-section" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                Meus Serviços
+                                <span class="badge badge-primary badge-pill">3</span>
+                            </a>
+                            <a href="#documents-section" class="list-group-item list-group-item-action">Documentos</a>
+                            <a href="#next-steps-section" class="list-group-item list-group-item-action">Próximos Passos</a>
+                            <a href="#podcasts-section" class="list-group-item list-group-item-action">Conteúdos Recomendados</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Precisa de ajuda?</h5>
+                        <p class="card-text">Caso tenha alguma dúvida sobre os serviços ou o portal, entre em contato:</p>
+                        <a href="https://wa.me/55981130624" target="_blank" class="btn btn-success btn-block">
+                            <i class="fab fa-whatsapp mr-2"></i>WhatsApp
+                        </a>
+                        <a href="mailto:contato@anaconecta.com.br" class="btn btn-outline-primary btn-block mt-2">
+                            <i class="far fa-envelope mr-2"></i>Email
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-lg-9">
+                <!-- Services Section -->
+                <section id="services-section" class="mb-5">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="mb-0">Meus Serviços</h3>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="serviceFilterDropdown" data-toggle="dropdown">
+                                Filtrar por Status
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Todos</a>
+                                <a class="dropdown-item" href="#">Em Andamento</a>
+                                <a class="dropdown-item" href="#">Concluídos</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <!-- Service Card 1 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">Mentoria Individual em Liderança</h5>
+                                    <div class="mb-3">
+                                        <span class="service-status status-in_progress">Em Andamento</span>
+                                    </div>
+                                    <p class="card-text">Programa personalizado de desenvolvimento de habilidades de liderança e gestão de equipes.</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <small class="text-muted">Início: 10/04/2025</small>
+                                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#serviceDetailModal">Ver Detalhes</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Service Card 2 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">Workshop de Comunicação Eficaz</h5>
+                                    <div class="mb-3">
+                                        <span class="service-status status-proposal_sent">Proposta Enviada</span>
+                                    </div>
+                                    <p class="card-text">Workshop para equipe sobre técnicas de comunicação assertiva e feedback construtivo.</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <small class="text-muted">Proposta: 05/05/2025</small>
+                                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#serviceProposalModal">Ver Proposta</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Service Card 3 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">Mentoria em Transição de Carreira</h5>
+                                    <div class="mb-3">
+                                        <span class="service-status status-completed">Concluído</span>
+                                    </div>
+                                    <p class="card-text">Processo de orientação para planejamento e execução de mudança de área profissional.</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <small class="text-muted">Concluído: 15/03/2025</small>
+                                        <a href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#serviceCompletedModal">Ver Resultados</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Documents Section -->
+                <section id="documents-section" class="mb-5">
+                    <h3 class="mb-4">Documentos</h3>
+                    
+                    <div class="row">
+                        <!-- Document Card 1 -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 document-card text-center">
+                                <div class="card-body">
+                                    <div class="document-icon document-pdf">
+                                        <i class="far fa-file-pdf"></i>
+                                    </div>
+                                    <h5 class="card-title">Contrato de Mentoria</h5>
+                                    <p class="card-text small">Acordo de serviços para mentoria individual em liderança.</p>
+                                    <a href="#" class="btn btn-sm btn-outline-primary">Baixar PDF</a>
+                                </div>
+                                <div class="card-footer bg-transparent text-muted small">
+                                    Adicionado em 10/04/2025
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Document Card 2 -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 document-card text-center">
+                                <div class="card-body">
+                                    <div class="document-icon document-doc">
+                                        <i class="far fa-file-word"></i>
+                                    </div>
+                                    <h5 class="card-title">Plano de Desenvolvimento</h5>
+                                    <p class="card-text small">Plano personalizado com objetivos e metas para o programa de mentoria.</p>
+                                    <a href="#" class="btn btn-sm btn-outline-primary">Baixar DOC</a>
+                                </div>
+                                <div class="card-footer bg-transparent text-muted small">
+                                    Adicionado em 15/04/2025
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Document Card 3 -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 document-card text-center">
+                                <div class="card-body">
+                                    <div class="document-icon document-pdf">
+                                        <i class="far fa-file-pdf"></i>
+                                    </div>
+                                    <h5 class="card-title">Proposta Workshop</h5>
+                                    <p class="card-text small">Proposta detalhada para workshop de comunicação eficaz.</p>
+                                    <a href="#" class="btn btn-sm btn-outline-primary">Baixar PDF</a>
+                                </div>
+                                <div class="card-footer bg-transparent text-muted small">
+                                    Adicionado em 05/05/2025
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Next Steps Section -->
+                <section id="next-steps-section" class="mb-5">
+                    <h3 class="mb-4">Próximos Passos</h3>
+                    
+                    <div class="row">
+                        <!-- Meeting Card 1 -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card meeting-card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="card-title">Sessão de Mentoria #6</h5>
+                                        <span class="badge badge-primary">Agendado</span>
+                                    </div>
+                                    <p class="card-text">Foco: Delegação eficaz e empoderamento de equipe</p>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2"><i class="far fa-calendar-alt mr-2"></i> 25 de Maio, 2025</li>
+                                        <li class="mb-2"><i class="far fa-clock mr-2"></i> 14:00 - 15:00</li>
+                                        <li><i class="fas fa-video mr-2"></i> Zoom (link enviado por email)</li>
+                                    </ul>
+                                    <div class="mt-3">
+                                        <a href="#" class="btn btn-sm btn-outline-primary mr-2">Adicionar ao Calendário</a>
+                                        <a href="#" class="btn btn-sm btn-outline-secondary">Reagendar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Pending Action Card -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="card-title">Aprovação Pendente</h5>
+                                        <span class="badge badge-warning">Aguardando</span>
+                                    </div>
+                                    <p class="card-text">A proposta para o Workshop de Comunicação Eficaz está aguardando sua aprovação.</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <small class="text-muted">Enviado em: 05/05/2025</small>
+                                        <div>
+                                            <a href="#" class="btn btn-sm btn-success mr-2">Aprovar</a>
+                                            <a href="#" class="btn btn-sm btn-outline-secondary">Solicitar Ajustes</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Recommended Content Section -->
+                <section id="podcasts-section">
+                    <h3 class="mb-4">Conteúdos Recomendados</h3>
+                    
+                    <div class="row">
+                        <!-- Podcast Card 1 -->
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card h-100">
+                                <img src="{{ url_for('static', filename='img/podcast-cover.jpg') }}" alt="Episódio de Podcast" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title">Liderança Humanizada em Tempos de Transformação</h5>
+                                    <p class="card-text small">Como liderar equipes com empatia e eficiência em um mundo em constante mudança.</p>
+                                    <a href="/institutional" class="btn btn-sm btn-outline-primary">Ouvir Agora</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Podcast Card 2 -->
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card h-100">
+                                <img src="{{ url_for('static', filename='img/podcast-cover.jpg') }}" alt="Episódio de Podcast" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title">Mentoria como Ferramenta de Desenvolvimento</h5>
+                                    <p class="card-text small">Entenda como a mentoria pode acelerar seu desenvolvimento pessoal e profissional.</p>
+                                    <a href="/institutional" class="btn btn-sm btn-outline-primary">Ouvir Agora</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Podcast Card 3 -->
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card h-100">
+                                <img src="{{ url_for('static', filename='img/podcast-cover.jpg') }}" alt="Episódio de Podcast" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title">Delegação Eficaz: Confiança e Responsabilidade</h5>
+                                    <p class="card-text small">Aprenda a delegar tarefas de forma estratégica, desenvolvendo sua equipe e otimizando resultados.</p>
+                                    <a href="/institutional" class="btn btn-sm btn-outline-primary">Ouvir Agora</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Service Detail Modal -->
+<div class="modal fade" id="serviceDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Mentoria Individual em Liderança</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="service-detail-header">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4 class="mb-3">Detalhes do Serviço</h4>
+                            <p><strong>Início:</strong> 10 de Abril, 2025</p>
+                            <p><strong>Duração:</strong> 6 meses (24 sessões)</p>
+                            <p><strong>Status:</strong> <span class="service-status status-in_progress">Em Andamento</span></p>
+                        </div>
+                        <div class="col-md-4 text-md-right">
+                            <p><strong>Valor Total:</strong> R$ 12.000,00</p>
+                            <p><strong>Forma de Pagamento:</strong> 6x R$ 2.000,00</p>
+                            <p><strong>Sessões Realizadas:</strong> 5 de 24</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Scope Section -->
+                <h5>Escopo da Mentoria</h5>
+                <div class="scope-container mb-4">
+                    <div class="scope-item">
+                        <h6>Desenvolvimento de Habilidades de Liderança</h6>
+                        <p>Aprimoramento de competências essenciais para liderança de equipes, incluindo comunicação assertiva, feedback construtivo e gestão de conflitos.</p>
+                    </div>
+                    <div class="scope-item">
+                        <h6>Gestão Estratégica de Equipes</h6>
+                        <p>Técnicas e ferramentas para estruturação, desenvolvimento e motivação de equipes de alta performance.</p>
+                    </div>
+                    <div class="scope-item">
+                        <h6>Liderança em Contextos de Mudança</h6>
+                        <p>Preparação para conduzir equipes em cenários de transformação organizacional, lidando com resistências e promovendo engajamento.</p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Section -->
+                <h5>Linha do Tempo</h5>
+                <div class="timeline-container mb-4">
+                    <div class="timeline-item">
+                        <div class="timeline-date">10 de Abril, 2025</div>
+                        <div class="timeline-content">
+                            <h6>Início da Mentoria</h6>
+                            <p>Sessão inicial para alinhamento de expectativas, diagnóstico de necessidades e definição de objetivos.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">17 de Abril, 2025</div>
+                        <div class="timeline-content">
+                            <h6>Avaliação de Perfil de Liderança</h6>
+                            <p>Aplicação de assessment para identificação de pontos fortes e oportunidades de desenvolvimento.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">24 de Abril, 2025</div>
+                        <div class="timeline-content">
+                            <h6>Apresentação do Plano de Desenvolvimento</h6>
+                            <p>Discussão e validação do plano personalizado com metas, ações e indicadores de progresso.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2 de Maio, 2025</div>
+                        <div class="timeline-content">
+                            <h6>Sessão 4: Comunicação Assertiva</h6>
+                            <p>Prática de técnicas para comunicação clara, objetiva e orientada a resultados.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">9 de Maio, 2025</div>
+                        <div class="timeline-content">
+                            <h6>Sessão 5: Feedback Construtivo</h6>
+                            <p>Metodologias para dar e receber feedback de forma eficaz e construtiva.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Payments Section -->
+                <h5>Pagamentos</h5>
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-3">
+                        <div class="payment-card">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="mb-0">Parcela 1/6</h6>
+                                <span class="payment-status paid">Pago</span>
+                            </div>
+                            <p class="mb-1"><strong>Valor:</strong> R$ 2.000,00</p>
+                            <p class="mb-1"><strong>Vencimento:</strong> 10/04/2025</p>
+                            <p class="mb-0"><strong>Método:</strong> Cartão de Crédito</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="payment-card">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="mb-0">Parcela 2/6</h6>
+                                <span class="payment-status paid">Pago</span>
+                            </div>
+                            <p class="mb-1"><strong>Valor:</strong> R$ 2.000,00</p>
+                            <p class="mb-1"><strong>Vencimento:</strong> 10/05/2025</p>
+                            <p class="mb-0"><strong>Método:</strong> Cartão de Crédito</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="payment-card">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="mb-0">Parcela 3/6</h6>
+                                <span class="payment-status pending">Pendente</span>
+                            </div>
+                            <p class="mb-1"><strong>Valor:</strong> R$ 2.000,00</p>
+                            <p class="mb-1"><strong>Vencimento:</strong> 10/06/2025</p>
+                            <p class="mb-0"><strong>Método:</strong> Cartão de Crédito</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chat Section -->
+                <h5 class="d-flex justify-content-between align-items-center">
+                    <span>Mensagens</span>
+                    <button class="btn btn-sm btn-primary" id="openChatBtn">
+                        <i class="far fa-comment-dots mr-1"></i>Nova Mensagem
+                    </button>
+                </h5>
+                <div class="chat-container">
+                    <div class="chat-message other">
+                        <div class="chat-bubble">
+                            <p class="mb-1">Olá! Gostaria de confirmar nossa próxima sessão para o dia 25/05 às 14h. Está bom para você?</p>
+                            <div class="chat-time">Ana Rosa - 18/05/2025 10:15</div>
+                        </div>
+                    </div>
+                    <div class="chat-message self">
+                        <div class="chat-bubble">
+                            <p class="mb-1">Olá Ana! Sim, está confirmado. Já reservei na minha agenda.</p>
+                            <div class="chat-time">Você - 18/05/2025 11:30</div>
+                        </div>
+                    </div>
+                    <div class="chat-message other">
+                        <div class="chat-bubble">
+                            <p class="mb-1">Perfeito! Lembre-se de preparar os exercícios de reflexão que conversamos na última sessão. Será importante para nosso próximo encontro.</p>
+                            <div class="chat-time">Ana Rosa - 18/05/2025 13:45</div>
+                        </div>
+                    </div>
+                    <div class="chat-message self">
+                        <div class="chat-bubble">
+                            <p class="mb-1">Já estou trabalhando neles! Tenho algumas dúvidas sobre o exercício de mapeamento de competências. Podemos discutir isso no início da próxima sessão?</p>
+                            <div class="chat-time">Você - 19/05/2025 09:20</div>
+                        </div>
+                    </div>
+                    <div class="chat-message other">
+                        <div class="chat-bubble">
+                            <p class="mb-1">Claro! Vamos reservar um tempo para isso no início. Se quiser, pode me enviar suas dúvidas específicas antes para que eu possa preparar melhor nossa discussão.</p>
+                            <div class="chat-time">Ana Rosa - 19/05/2025 10:05</div>
+                        </div>
+                    </div>
+                </div>
+                <form id="chatForm" class="mt-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Digite sua mensagem..." id="messageInput">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">Enviar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Request Service Modal -->
+<div class="modal fade" id="requestServiceModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Solicitar Novo Serviço</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="requestServiceForm">
+                    <div class="form-group">
+                        <label for="serviceType">Tipo de Serviço*</label>
+                        <select class="form-control" id="serviceType" required>
+                            <option value="">Selecione o tipo de serviço</option>
+                            <option value="mentoria_individual">Mentoria Individual</option>
+                            <option value="mentoria_grupo">Mentoria em Grupo</option>
+                            <option value="workshop">Workshop</option>
+                            <option value="palestra">Palestra</option>
+                            <option value="consultoria">Consultoria</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceTitle">Título/Tema*</label>
+                        <input type="text" class="form-control" id="serviceTitle" placeholder="Ex: Mentoria em Liderança" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceDescription">Descrição e Objetivos*</label>
+                        <textarea class="form-control" id="serviceDescription" rows="4" placeholder="Descreva brevemente suas necessidades e objetivos com este serviço" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceDate">Data de Início Desejada</label>
+                        <input type="date" class="form-control" id="serviceDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceAdditionalInfo">Informações Adicionais</label>
+                        <textarea class="form-control" id="serviceAdditionalInfo" rows="3" placeholder="Outras informações relevantes, como quantidade de participantes, duração esperada, etc."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="submitServiceRequest">Enviar Solicitação</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Service Proposal Modal -->
+<div class="modal fade" id="serviceProposalModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Proposta: Workshop de Comunicação Eficaz</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="service-detail-header mb-4">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4 class="mb-3">Workshop de Comunicação Eficaz</h4>
+                            <p><strong>Proposta enviada em:</strong> 05 de Maio, 2025</p>
+                            <p><strong>Validade da proposta:</strong> 15 dias</p>
+                        </div>
+                        <div class="col-md-4 text-md-right">
+                            <p><strong>Valor Total:</strong> R$ 4.800,00</p>
+                            <p><strong>Duração:</strong> 8 horas (1 dia)</p>
+                            <p><strong>Participantes:</strong> Até 15 pessoas</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h5>Descrição do Workshop</h5>
+                <p>O Workshop de Comunicação Eficaz foi desenvolvido para equipes que desejam aprimorar suas habilidades de comunicação interna, feedback e resolução de conflitos. Com metodologia prática e interativa, os participantes terão a oportunidade de desenvolver competências essenciais para uma comunicação clara, assertiva e construtiva no ambiente de trabalho.</p>
+                
+                <h5 class="mt-4">Conteúdo Programático</h5>
+                <ul>
+                    <li>Fundamentos da comunicação interpessoal</li>
+                    <li>Comunicação verbal e não-verbal</li>
+                    <li>Técnicas de escuta ativa</li>
+                    <li>Comunicação assertiva</li>
+                    <li>Metodologias de feedback construtivo</li>
+                    <li>Ferramentas para prevenção e resolução de conflitos</li>
+                    <li>Comunicação em equipes multidisciplinares</li>
+                    <li>Plano de ação individual e coletivo</li>
+                </ul>
+                
+                <h5 class="mt-4">Metodologia</h5>
+                <p>O workshop utiliza uma abordagem prática com 70% do tempo dedicado a atividades, dinâmicas e simulações que permitem aplicar os conceitos apresentados. Os 30% restantes são destinados a apresentações conceituais, discussões e reflexões em grupo.</p>
+                
+                <h5 class="mt-4">Materiais Inclusos</h5>
+                <ul>
+                    <li>Apostila digital com todo o conteúdo do workshop</li>
+                    <li>Templates e ferramentas práticas para uso posterior</li>
+                    <li>Certificado de participação</li>
+                    <li>Acesso a plataforma online com conteúdos complementares por 30 dias</li>
+                </ul>
+                
+                <h5 class="mt-4">Investimento e Condições</h5>
+                <p><strong>Valor total:</strong> R$ 4.800,00</p>
+                <p><strong>Formas de pagamento:</strong></p>
+                <ul>
+                    <li>À vista com 5% de desconto: R$ 4.560,00</li>
+                    <li>Em 2x sem juros: R$ 2.400,00</li>
+                </ul>
+                <p><strong>O valor inclui:</strong></p>
+                <ul>
+                    <li>Facilitação do workshop por Ana Rosa Marcuartú</li>
+                    <li>Todos os materiais didáticos</li>
+                    <li>Relatório pós-workshop com insights e recomendações</li>
+                </ul>
+                <p><strong>Não inclui:</strong> Despesas com espaço físico, alimentação, equipamentos audiovisuais ou deslocamento (se fora de São Paulo).</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-success" id="approveProposal">Aprovar Proposta</button>
+                <button type="button" class="btn btn-outline-primary" id="requestChanges">Solicitar Ajustes</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Chat functionality
+        const chatForm = document.getElementById('chatForm');
+        const messageInput = document.getElementById('messageInput');
+        
+        if (chatForm) {
+            chatForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                const message = messageInput.value.trim();
+                if (message) {
+                    // Create new message element
+                    const chatContainer = document.querySelector('.chat-container');
+                    const newMessage = document.createElement('div');
+                    newMessage.className = 'chat-message self';
+                    
+                    const now = new Date();
+                    const formattedDate = `${now.getDate().toString().padStart(2, '0')}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getFullYear()} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+                    
+                    newMessage.innerHTML = `
+                        <div class="chat-bubble">
+                            <p class="mb-1">${message}</p>
+                            <div class="chat-time">Você - ${formattedDate}</div>
+                        </div>
+                    `;
+                    
+                    chatContainer.appendChild(newMessage);
+                    
+                    // Scroll to the bottom
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                    
+                    // Clear the input
+                    messageInput.value = '';
+                }
+            });
+        }
+        
+        // Service request form
+        const submitServiceRequest = document.getElementById('submitServiceRequest');
+        if (submitServiceRequest) {
+            submitServiceRequest.addEventListener('click', function() {
+                const form = document.getElementById('requestServiceForm');
+                
+                // Check form validity
+                if (form.checkValidity()) {
+                    // Here would be the actual form submission
+                    
+                    // Show success message
+                    alert('Sua solicitação de serviço foi enviada com sucesso! Entraremos em contato em até 48 horas com uma proposta personalizada.');
+                    
+                    // Close the modal
+                    $('#requestServiceModal').modal('hide');
+                    
+                    // Reset form
+                    form.reset();
+                } else {
+                    // Trigger form validation
+                    form.reportValidity();
+                }
+            });
+        }
+        
+        // Proposal handling
+        const approveProposal = document.getElementById('approveProposal');
+        if (approveProposal) {
+            approveProposal.addEventListener('click', function() {
+                alert('Proposta aprovada com sucesso! Entraremos em contato para agendar a data do workshop.');
+                $('#serviceProposalModal').modal('hide');
+            });
+        }
+        
+        const requestChanges = document.getElementById('requestChanges');
+        if (requestChanges) {
+            requestChanges.addEventListener('click', function() {
+                const feedback = prompt('Por favor, informe quais ajustes você gostaria de solicitar na proposta:');
+                if (feedback) {
+                    alert('Sua solicitação de ajustes foi enviada com sucesso! Retornaremos em breve com uma proposta atualizada.');
+                    $('#serviceProposalModal').modal('hide');
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

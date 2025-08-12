@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Ana Conecta{% endblock %}</title>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    
+    {% block head_extra %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="{{ url_for('static', filename='img/ana-profile-photo.png') }}" alt="Ana Conecta Logo" height="40" style="border-radius: 50%; object-fit: cover;">
+                <span style="margin-left: 10px; font-weight: 600; color: #fff;">Ana Conecta</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item {% if request.path == '/' %}active{% endif %}">
+                        <a class="nav-link" href="/"><i class="fas fa-home"></i> Início</a>
+                    </li>
+                    <li class="nav-item {% if request.path == '/clients' %}active{% endif %}">
+                        <a class="nav-link" href="/clients"><i class="fas fa-users"></i> Clientes</a>
+                    </li>
+                    <li class="nav-item {% if request.path == '/initiatives' %}active{% endif %}">
+                        <a class="nav-link" href="/initiatives"><i class="fas fa-lightbulb"></i> Iniciativas</a>
+                    </li>
+                    <li class="nav-item {% if request.path == '/mentorships' %}active{% endif %}">
+                        <a class="nav-link" href="/mentorships"><i class="fas fa-chalkboard-teacher"></i> Mentorias</a>
+                    </li>
+                    <li class="nav-item {% if request.path == '/services' %}active{% endif %}">
+                        <a class="nav-link" href="/services"><i class="fas fa-briefcase"></i> Serviços</a>
+                    </li>
+                    <li class="nav-item {% if request.path == '/institutional' %}active{% endif %}">
+                        <a class="nav-link" href="/institutional"><i class="fas fa-podcast"></i> Conteúdos</a>
+                    </li>
+                    <li class="nav-item {% if request.path == '/portal' %}active{% endif %}">
+                        <a class="nav-link" href="/portal"><i class="fas fa-user-check"></i> Área do Cliente</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Alert Container -->
+    <div id="alert-container" class="container mt-3"></div>
+    
+    <!-- Main Content -->
+    <main class="container py-4">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Footer -->
+    <footer class="py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 Ana Conecta. Todos os direitos reservados.</p>
+                </div>
+                <div class="col-md-6 text-md-right">
+                    <a href="https://www.youtube.com/@anaconecta" target="_blank" class="mr-3">
+                        <i class="fab fa-youtube"></i> YouTube
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+    
+    <!-- Common JavaScript -->
+    <script src="{{ url_for('static', filename='js/common.js') }}"></script>
+    
+    {% block scripts %}{% endblock %}
+</body>
+</html>

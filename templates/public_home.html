@@ -1,0 +1,308 @@
+{% extends 'public_base.html' %}
+
+{% block title %}Ana Conecta - Mentoria em Carreira e Desenvolvimento{% endblock %}
+
+{% block head_extra %}
+<style>
+    .service-icon {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        color: var(--primary-color);
+    }
+    
+    .counter-box {
+        text-align: center;
+        padding: 30px 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: var(--box-shadow);
+    }
+    
+    .counter-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 10px;
+    }
+    
+    .counter-text {
+        font-size: 1.1rem;
+        color: var(--dark-color);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container hero-content">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="mb-4">Conectando Pessoas ao Seu Potencial</h1>
+                <p class="lead mb-4">Mentorias personalizadas para desenvolvimento de carreira, liderança e crescimento profissional.</p>
+                <div class="d-flex flex-wrap">
+                    <a href="/services" class="btn btn-light btn-lg mr-3 mb-3">Conheça os Serviços</a>
+                    <a href="/contact" class="btn btn-outline-light btn-lg mb-3">Agende uma Conversa</a>
+                </div>
+            </div>
+            <div class="col-lg-6 hero-profile text-center">
+                <img src="{{ url_for('static', filename='img/ana-profile-photo.png') }}" alt="Ana Rosa Marcuartú" class="profile-photo">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-5 mb-4 mb-lg-0">
+                <div class="card border-0">
+                    <div class="card-body p-0">
+                        <img src="{{ url_for('static', filename='img/ana-profile-photo.png') }}" alt="Ana Rosa Marcuartú" class="img-fluid rounded">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <h2 class="mb-4">Ana Rosa Marcuartú</h2>
+                <p class="lead mb-4">Mentora de Carreira e Desenvolvimento Profissional</p>
+                <p>Sou Ana Rosa Marcuartú e esse é o espaço Ana Conecta, um lugar de trocas e conexões com foco em Aprendizado ao longo da vida, Educação Humano-Digital, Carreira, trabalho e renda e Pensamento de futuros.</p>
+                <p class="mb-4">Com experiência em desenvolvimento humano, liderança e carreira, ajudo profissionais e organizações a alcançarem seu potencial máximo através de mentorias personalizadas e programas de desenvolvimento.</p>
+                <div class="mb-4">
+                    <a href="https://www.linkedin.com/in/anarosamarcuartu/" target="_blank" class="btn btn-outline-primary mr-2">
+                        <i class="fab fa-linkedin mr-2"></i>LinkedIn
+                    </a>
+                    <a href="https://www.youtube.com/@anaconecta" target="_blank" class="btn btn-outline-danger">
+                        <i class="fab fa-youtube mr-2"></i>YouTube
+                    </a>
+                </div>
+                <a href="/institutional" class="btn btn-primary">Conheça Meus Conteúdos</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">Serviços</h2>
+            <p class="lead">Soluções personalizadas para seu desenvolvimento pessoal e profissional</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 service-card">
+                    <div class="card-body text-center">
+                        <div class="service-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h4 class="card-title">Mentoria Individual</h4>
+                        <p class="card-text">Sessões personalizadas para desenvolvimento profissional, planejamento de carreira e superação de desafios específicos.</p>
+                        <a href="/services#mentoria-individual" class="btn btn-outline-primary mt-3">Saiba Mais</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 service-card">
+                    <div class="card-body text-center">
+                        <div class="service-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4 class="card-title">Mentoria em Grupo</h4>
+                        <p class="card-text">Desenvolvimento coletivo com foco em temas específicos, proporcionando troca de experiências e networking entre os participantes.</p>
+                        <a href="/services#mentoria-grupo" class="btn btn-outline-primary mt-3">Saiba Mais</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 service-card">
+                    <div class="card-body text-center">
+                        <div class="service-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <h4 class="card-title">Palestras e Workshops</h4>
+                        <p class="card-text">Apresentações dinâmicas sobre temas relacionados a carreira, liderança, transformação digital e desenvolvimento humano.</p>
+                        <a href="/services#palestras" class="btn btn-outline-primary mt-3">Saiba Mais</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Results Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">Resultados que Entregamos</h2>
+            <p class="lead">O impacto de nosso trabalho em números</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-3 col-6 mb-4">
+                <div class="counter-box">
+                    <div class="counter-number">100+</div>
+                    <div class="counter-text">Clientes Atendidos</div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-6 mb-4">
+                <div class="counter-box">
+                    <div class="counter-number">25+</div>
+                    <div class="counter-text">Episódios de Podcast</div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-6 mb-4">
+                <div class="counter-box">
+                    <div class="counter-number">95%</div>
+                    <div class="counter-text">Índice de Satisfação</div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-6 mb-4">
+                <div class="counter-box">
+                    <div class="counter-number">12+</div>
+                    <div class="counter-text">Anos de Experiência</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">Depoimentos</h2>
+            <p class="lead">O que nossos clientes dizem sobre nós</p>
+        </div>
+        
+        <div id="testimonialCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="testimonial-item">
+                                <blockquote class="blockquote">
+                                    <p>"A mentoria com Ana Rosa transformou minha carreira. Consegui identificar pontos cegos que estavam me impedindo de crescer profissionalmente e desenvolvi novas habilidades de liderança que me levaram a uma promoção."</p>
+                                    <footer class="blockquote-footer">Mariana Silveira, Gerente de Marketing</footer>
+                                </blockquote>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="testimonial-item">
+                                <blockquote class="blockquote">
+                                    <p>"Participar do grupo de mentoria foi uma experiência enriquecedora. Além do aprendizado com a Ana Rosa, a troca com outros profissionais ampliou minha visão sobre desafios semelhantes em diferentes contextos."</p>
+                                    <footer class="blockquote-footer">Ricardo Mendes, Coordenador de RH</footer>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="carousel-item">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="testimonial-item">
+                                <blockquote class="blockquote">
+                                    <p>"A palestra da Ana Rosa em nossa empresa trouxe reflexões importantes sobre comunicação e liderança. O feedback dos colaboradores foi extremamente positivo, e muitos já estão aplicando os conceitos no dia a dia."</p>
+                                    <footer class="blockquote-footer">Fernanda Lima, Diretora de Operações</footer>
+                                </blockquote>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="testimonial-item">
+                                <blockquote class="blockquote">
+                                    <p>"O trabalho da Ana Rosa não só me ajudou a melhorar minhas habilidades de gestão, mas também trouxe uma nova perspectiva sobre como equilibrar vida pessoal e profissional. Recomendo a todas as pessoas que buscam crescimento genuíno."</p>
+                                    <footer class="blockquote-footer">Paulo Santos, Empreendedor</footer>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <ol class="carousel-indicators position-relative mt-3">
+                <li data-target="#testimonialCarousel" data-slide-to="0" class="active bg-secondary"></li>
+                <li data-target="#testimonialCarousel" data-slide-to="1" class="bg-secondary"></li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Content Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">Conteúdos em Destaque</h2>
+            <p class="lead">Confira nossos episódios de podcast e artigos mais recentes</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="{{ url_for('static', filename='img/podcast/podcast1.png') }}" alt="Podcast Episode" class="card-img-top">
+                    <div class="card-body">
+                        <span class="badge badge-primary mb-2">Podcast</span>
+                        <h5 class="card-title">Liderança Humanizada em Tempos de Transformação</h5>
+                        <p class="card-text">Como liderar equipes com empatia e eficiência em um mundo em constante mudança.</p>
+                        <a href="/institutional" class="btn btn-outline-primary">Ouvir Agora</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="{{ url_for('static', filename='img/podcast/podcast2.png') }}" alt="Podcast Episode" class="card-img-top">
+                    <div class="card-body">
+                        <span class="badge badge-primary mb-2">Podcast</span>
+                        <h5 class="card-title">Mentoria como Ferramenta de Desenvolvimento</h5>
+                        <p class="card-text">Entenda como a mentoria pode acelerar seu desenvolvimento pessoal e profissional.</p>
+                        <a href="/institutional" class="btn btn-outline-primary">Ouvir Agora</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="{{ url_for('static', filename='img/podcast/podcast3.png') }}" alt="Podcast Episode" class="card-img-top">
+                    <div class="card-body">
+                        <span class="badge badge-primary mb-2">Podcast</span>
+                        <h5 class="card-title">Liderança Humanizada em Tempos de Transformação</h5>
+                        <p class="card-text">Como liderar equipes com empatia e eficiência em um mundo em constante mudança.</p>
+                        <a href="/institutional" class="btn btn-outline-primary">Ouvir Agora</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="/institutional" class="btn btn-primary btn-lg">Ver Todos os Conteúdos</a>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container text-center">
+        <h2 class="mb-4">Pronto para transformar sua carreira?</h2>
+        <p class="lead mb-4">Agende uma conversa inicial sem compromisso e descubra como podemos ajudar em seu desenvolvimento profissional.</p>
+        <a href="/contact" class="btn btn-light btn-lg">Agendar Conversa</a>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize carousel
+        $('.carousel').carousel({
+            interval: 5000
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block title %}Ana Conecta - Mentorias{% endblock %}
+
+{% block content %}
+<div class="page-header d-flex justify-content-between align-items-center">
+    <div>
+        <h1>Gestão de Mentorias</h1>
+        <p class="lead">Gerencie suas sessões de mentoria e acompanhe o progresso dos clientes.</p>
+    </div>
+    <button class="btn btn-primary" onclick="showNewMentorshipModal()">
+        <i class="fas fa-chalkboard-teacher"></i> Nova Mentoria
+    </button>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="row align-items-center">
+            <div class="col-md-3">
+                <h5 class="mb-0">Filtros</h5>
+            </div>
+            <div class="col-md-9">
+                <div class="form-group mb-0">
+                    <select id="mentorship-status-filter" class="form-control">
+                        <option value="">Todos os status</option>
+                        <option value="initial_contact">Contato Inicial</option>
+                        <option value="proposal_sent">Proposta Enviada</option>
+                        <option value="contract_signed">Contrato Assinado</option>
+                        <option value="in_progress">Em Progresso</option>
+                        <option value="completed">Concluída</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Cliente</th>
+                        <th>Status</th>
+                        <th>Reuniões</th>
+                        <th>Data de Criação</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="mentorships-table-body">
+                    <!-- Mentorship rows will be inserted here by JavaScript -->
+                    <tr>
+                        <td colspan="6" class="text-center">Carregando mentorias...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Mentorship Modal -->
+<div class="modal fade" id="mentorshipModal" tabindex="-1" aria-labelledby="mentorshipModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mentorshipModalLabel">Nova Mentoria</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="mentorship-form">
+                    <div class="form-group">
+                        <label for="mentorship-client">Cliente</label>
+                        <select class="form-control" id="mentorship-client" required>
+                            <option value="">Selecione um cliente...</option>
+                            <!-- Clients will be loaded by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="mentorship-title">Título</label>
+                        <input type="text" class="form-control" id="mentorship-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mentorship-description">Descrição</label>
+                        <textarea class="form-control" id="mentorship-description" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="mentorship-status">Status</label>
+                        <select class="form-control" id="mentorship-status">
+                            <option value="initial_contact">Contato Inicial</option>
+                            <option value="proposal_sent">Proposta Enviada</option>
+                            <option value="contract_signed">Contrato Assinado</option>
+                            <option value="in_progress">Em Progresso</option>
+                            <option value="completed">Concluída</option>
+                        </select>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="form-group">
+                        <label>Reuniões</label>
+                        <div id="meetings-container">
+                            <!-- Meeting items will be added here by JavaScript -->
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="add-meeting-btn">
+                            <i class="fas fa-plus"></i> Adicionar Reunião
+                        </button>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="form-group">
+                        <label>Documentos</label>
+                        <div id="documents-container">
+                            <!-- Document items will be added here by JavaScript -->
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="add-document-btn">
+                            <i class="fas fa-plus"></i> Adicionar Documento
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" form="mentorship-form" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/mentorships.js') }}"></script>
+{% endblock %}

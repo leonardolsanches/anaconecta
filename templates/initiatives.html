@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block title %}Ana Conecta - Iniciativas{% endblock %}
+
+{% block content %}
+<div class="page-header d-flex justify-content-between align-items-center">
+    <div>
+        <h1>Gestão de Iniciativas</h1>
+        <p class="lead">Gerencie suas iniciativas, projetos e ideias.</p>
+    </div>
+    <button class="btn btn-primary" onclick="showNewInitiativeModal()">
+        <i class="fas fa-lightbulb"></i> Nova Iniciativa
+    </button>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="row align-items-center">
+            <div class="col-md-3">
+                <h5 class="mb-0">Filtros</h5>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group mb-0">
+                    <select id="initiative-category-filter" class="form-control">
+                        <option value="">Todas as categorias</option>
+                        <!-- Categories will be loaded by JavaScript -->
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group mb-0">
+                    <select id="initiative-status-filter" class="form-control">
+                        <option value="">Todos os status</option>
+                        <option value="pending">Pendente</option>
+                        <option value="in_progress">Em Progresso</option>
+                        <option value="completed">Concluído</option>
+                        <option value="cancelled">Cancelado</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Categoria</th>
+                        <th>Status</th>
+                        <th>Prioridade</th>
+                        <th>Data de Criação</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="initiatives-table-body">
+                    <!-- Initiative rows will be inserted here by JavaScript -->
+                    <tr>
+                        <td colspan="6" class="text-center">Carregando iniciativas...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Initiative Modal -->
+<div class="modal fade" id="initiativeModal" tabindex="-1" aria-labelledby="initiativeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="initiativeModalLabel">Nova Iniciativa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="initiative-form">
+                    <div class="form-group">
+                        <label for="initiative-title">Título</label>
+                        <input type="text" class="form-control" id="initiative-title" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="initiative-category">Categoria</label>
+                                <select class="form-control" id="initiative-category" required>
+                                    <!-- Categories will be loaded by JavaScript -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="initiative-status">Status</label>
+                                <select class="form-control" id="initiative-status">
+                                    <option value="pending">Pendente</option>
+                                    <option value="in_progress">Em Progresso</option>
+                                    <option value="completed">Concluído</option>
+                                    <option value="cancelled">Cancelado</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="initiative-priority">Prioridade (1-5, sendo 1 a mais alta)</label>
+                        <input type="range" class="form-control-range" id="initiative-priority" min="1" max="5" value="3">
+                        <div class="d-flex justify-content-between">
+                            <small>Alta</small>
+                            <small>Média</small>
+                            <small>Baixa</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="initiative-description">Descrição</label>
+                        <textarea class="form-control" id="initiative-description" rows="5" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" form="initiative-form" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/initiatives.js') }}"></script>
+{% endblock %}

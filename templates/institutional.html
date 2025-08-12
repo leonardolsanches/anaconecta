@@ -1,0 +1,551 @@
+{% extends 'public_base.html' %}
+
+{% block title %}Ana Conecta - Conteúdos{% endblock %}
+
+{% block head_extra %}
+<style>
+    .podcast-cover {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: var(--border-radius);
+    }
+    
+    .podcast-item {
+        transition: transform 0.3s;
+        margin-bottom: 30px;
+    }
+    
+    .podcast-item:hover {
+        transform: translateY(-5px);
+    }
+    
+    .podcast-meta {
+        font-size: 0.9rem;
+        color: #777;
+        margin-bottom: 10px;
+    }
+    
+    .podcast-meta i {
+        margin-right: 5px;
+    }
+    
+    .podcast-category {
+        display: inline-block;
+        padding: 3px 10px;
+        background-color: rgba(52, 152, 219, 0.1);
+        color: var(--primary-color);
+        border-radius: 30px;
+        font-size: 0.8rem;
+        margin-right: 5px;
+        margin-bottom: 5px;
+    }
+    
+    .profile-section {
+        background-color: #f9f9f9;
+        padding: 100px 0;
+        position: relative;
+    }
+    
+    .profile-section:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(52, 152, 219, 0.1) 0%, rgba(52, 152, 219, 0.05) 100%);
+    }
+    
+    .profile-content {
+        position: relative;
+        z-index: 1;
+    }
+    
+    .youtube-video-container {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+        height: 0;
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+    
+    .youtube-video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: var(--border-radius);
+    }
+    
+    .highlight-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background-color: var(--primary-color);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 30px;
+        font-size: 0.8rem;
+        z-index: 2;
+    }
+    
+    .search-container {
+        margin-bottom: 30px;
+    }
+    
+    .filter-button-group {
+        margin-bottom: 30px;
+    }
+    
+    .filter-button {
+        background-color: transparent;
+        border: 1px solid #ddd;
+        margin-right: 8px;
+        margin-bottom: 10px;
+        border-radius: 30px;
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+    
+    .filter-button.active {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="mb-3">Conteúdos</h1>
+                <p class="lead mb-0">Podcast, artigos e reflexões sobre carreira, liderança e desenvolvimento humano</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Profile Section -->
+<section class="profile-section">
+    <div class="container profile-content">
+        <div class="row align-items-center">
+            <div class="col-lg-5 mb-5 mb-lg-0 text-center">
+                <img src="{{ url_for('static', filename='img/ana-profile-photo.png') }}" alt="Ana Rosa Marcuartú" class="profile-photo">
+                <div class="social-icons mt-4">
+                    <a href="https://www.youtube.com/@anaconecta" target="_blank" class="mx-2"><i class="fab fa-youtube fa-2x"></i></a>
+                    <a href="https://www.linkedin.com/in/anarosamarcuartu/" target="_blank" class="mx-2"><i class="fab fa-linkedin-in fa-2x"></i></a>
+                    <a href="https://www.instagram.com/anarosamarcuartu/" target="_blank" class="mx-2"><i class="fab fa-instagram fa-2x"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <h2 class="mb-4">Ana Rosa Marcuartú</h2>
+                <p class="lead mb-4">Mentora de Carreira e Desenvolvimento Profissional</p>
+                <p>Sou Ana Rosa Marcuartú e esse é o espaço Ana Conecta, um lugar de trocas e conexões com foco em Aprendizado ao longo da vida, Educação Humano-Digital, Carreira, trabalho e renda e Pensamento de futuros.</p>
+                
+                <p class="mb-4">Profissional com mais de 12 anos de experiência em desenvolvimento humano, liderança e carreira, ajudo profissionais e organizações a alcançarem seu potencial máximo através de mentorias personalizadas e programas de desenvolvimento.</p>
+                
+                <p class="mb-4">Nos meus conteúdos, compartilho reflexões, entrevistas e ferramentas práticas para ajudar você em sua jornada de desenvolvimento pessoal e profissional.</p>
+                
+                <div class="mt-4">
+                    <a href="/services" class="btn btn-primary mr-3">Conheça Meus Serviços</a>
+                    <a href="/contact" class="btn btn-outline-primary">Entre em Contato</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Podcast Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">Podcast em Destaque</h2>
+            <p class="lead">Episódios mais recentes do Ana Conecta Podcast</p>
+        </div>
+        
+        <div class="row">
+            <!-- Podcast Episode 1 -->
+            <div class="col-lg-8 mx-auto mb-5">
+                <div class="card border-0 shadow">
+                    <div class="card-body p-4">
+                        <div class="highlight-badge">Novo Episódio</div>
+                        <h3 class="mb-3">Carreira, Propósito e Reinvenção Profissional</h3>
+                        <div class="podcast-meta mb-4">
+                            <span class="mr-3"><i class="far fa-calendar-alt"></i> 15 de Maio, 2025</span>
+                            <span><i class="far fa-clock"></i> 45 minutos</span>
+                        </div>
+                        
+                        <div class="youtube-video-container">
+                            <iframe src="https://www.youtube.com/embed/f_T9-9nKvG0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        
+                        <p class="mb-4">Uma conversa profunda sobre como encontrar significado no trabalho e reinventar sua carreira quando necessário. Neste episódio, discutimos a importância do alinhamento entre valores pessoais e atuação profissional, além de compartilhar estratégias práticas para quem está em processo de transição de carreira.</p>
+                        
+                        <div class="mb-4">
+                            <span class="podcast-category">Carreira</span>
+                            <span class="podcast-category">Propósito</span>
+                            <span class="podcast-category">Desenvolvimento</span>
+                        </div>
+                        
+                        <a href="#" class="btn btn-primary">Ver Episódio Completo</a>
+                        <a href="https://www.youtube.com/@anaconecta" target="_blank" class="btn btn-outline-danger ml-2">
+                            <i class="fab fa-youtube mr-2"></i>Canal no YouTube
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Podcast Episodes Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h2 class="mb-3">Todos os Episódios</h2>
+            <p class="lead">Explore o arquivo completo do Ana Conecta Podcast</p>
+        </div>
+        
+        <!-- Search and Filter -->
+        <div class="row mb-4">
+            <div class="col-md-6 mb-3 mb-md-0">
+                <div class="search-container">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Buscar episódios..." id="searchPodcast">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="filter-button-group">
+                    <button class="filter-button active" data-filter="all">Todos</button>
+                    <button class="filter-button" data-filter="carreira">Carreira</button>
+                    <button class="filter-button" data-filter="lideranca">Liderança</button>
+                    <button class="filter-button" data-filter="desenvolvimento">Desenvolvimento</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row" id="podcast-grid">
+            <!-- Podcast Episode 1 -->
+            <div class="col-md-6 col-lg-4 podcast-item" data-category="carreira desenvolvimento">
+                <div class="card h-100 shadow-sm">
+                    <div class="position-relative">
+                        <img src="{{ url_for('static', filename='img/podcasts/Episódio #01 Uma Ponte para Você - Com Nivea Oliveira.JPG') }}" alt="Episódio de Podcast" class="podcast-cover">
+                        <div class="position-absolute top-0 end-0 m-2">
+                            <a href="https://www.youtube.com/watch?v=f_T9-9nKvG0" target="_blank" class="btn btn-danger btn-sm">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Uma Ponte para Você</h5>
+                        <div class="podcast-meta">
+                            <span class="mr-3"><i class="far fa-calendar-alt"></i> 15 de Janeiro, 2024</span>
+                            <span><i class="far fa-clock"></i> 45min</span>
+                        </div>
+                        <p class="card-text">Conversa sobre conexões significativas e desenvolvimento pessoal. <strong>Convidada: Nivea Oliveira</strong></p>
+                        <div class="mb-3">
+                            <span class="podcast-category">Desenvolvimento</span>
+                            <span class="podcast-category">Carreira</span>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=f_T9-9nKvG0" target="_blank" class="btn btn-sm btn-outline-primary">Ouvir Agora</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Podcast Episode 2 -->
+            <div class="col-md-6 col-lg-4 podcast-item" data-category="lideranca">
+                <div class="card h-100 shadow-sm">
+                    <div class="position-relative">
+                        <img src="{{ url_for('static', filename='img/podcasts/Episódio #6  Longevidade Produtiva e o Mercado de Trabalho para a Mulher Madura Com Marcia Tavares.JPG') }}" alt="Episódio de Podcast" class="podcast-cover">
+                        <div class="position-absolute top-0 end-0 m-2">
+                            <a href="https://www.youtube.com/watch?v=TL5TwZlm0bI" target="_blank" class="btn btn-danger btn-sm">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Longevidade Produtiva e o Mercado de Trabalho para a Mulher Madura</h5>
+                        <div class="podcast-meta">
+                            <span class="mr-3"><i class="far fa-calendar-alt"></i> 1 de Fevereiro, 2024</span>
+                            <span><i class="far fa-clock"></i> 38min</span>
+                        </div>
+                        <p class="card-text">Uma análise sobre os desafios e oportunidades para mulheres maduras no mercado de trabalho. <strong>Convidada: Marcia Tavares</strong></p>
+                        <div class="mb-3">
+                            <span class="podcast-category">Carreira</span>
+                            <span class="podcast-category">Liderança</span>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=TL5TwZlm0bI" target="_blank" class="btn btn-sm btn-outline-primary">Ouvir Agora</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Podcast Episode 3 -->
+            <div class="col-md-6 col-lg-4 podcast-item" data-category="desenvolvimento saude">
+                <div class="card h-100 shadow-sm">
+                    <div class="position-relative">
+                        <img src="{{ url_for('static', filename='img/podcasts/Episódio #7 Saúde mental na economia do cuidado com Monique Menezes.JPG') }}" alt="Episódio de Podcast" class="podcast-cover">
+                        <div class="position-absolute top-0 end-0 m-2">
+                            <a href="https://www.youtube.com/watch?v=d1QcYDskQkQ" target="_blank" class="btn btn-danger btn-sm">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Saúde Mental na Economia do Cuidado</h5>
+                        <div class="podcast-meta">
+                            <span class="mr-3"><i class="far fa-calendar-alt"></i> 15 de Fevereiro, 2024</span>
+                            <span><i class="far fa-clock"></i> 42min</span>
+                        </div>
+                        <p class="card-text">A importância da saúde mental no ambiente de trabalho e como implementar uma cultura de cuidado. <strong>Convidada: Monique Menezes</strong></p>
+                        <div class="mb-3">
+                            <span class="podcast-category">Saúde Mental</span>
+                            <span class="podcast-category">Desenvolvimento</span>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=d1QcYDskQkQ" target="_blank" class="btn btn-sm btn-outline-primary">Ouvir Agora</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Podcast Episode 4 -->
+            <div class="col-md-6 col-lg-4 podcast-item" data-category="financas">
+                <div class="card h-100 shadow-sm">
+                    <div class="position-relative">
+                        <img src="{{ url_for('static', filename='img/podcasts/Episódio #04 O Poder de Transformação do Planejamento Financeiro Pessoal - Com Silze Takano.JPG') }}" alt="Episódio de Podcast" class="podcast-cover">
+                        <div class="position-absolute top-0 end-0 m-2">
+                            <a href="https://www.youtube.com/watch?v=x9sqzEVxgdE" target="_blank" class="btn btn-danger btn-sm">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">O Poder de Transformação do Planejamento Financeiro Pessoal</h5>
+                        <div class="podcast-meta">
+                            <span class="mr-3"><i class="far fa-calendar-alt"></i> 1 de Março, 2024</span>
+                            <span><i class="far fa-clock"></i> 35min</span>
+                        </div>
+                        <p class="card-text">Como o planejamento financeiro pode transformar sua vida pessoal e profissional. <strong>Convidada: Silze Takano</strong></p>
+                        <div class="mb-3">
+                            <span class="podcast-category">Finanças</span>
+                            <span class="podcast-category">Desenvolvimento</span>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=x9sqzEVxgdE" target="_blank" class="btn btn-sm btn-outline-primary">Ouvir Agora</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Podcast Episode 5 -->
+            <div class="col-md-6 col-lg-4 podcast-item" data-category="rh carreira">
+                <div class="card h-100 shadow-sm">
+                    <div class="position-relative">
+                        <img src="{{ url_for('static', filename='img/podcasts/Ana Conecta Podcast Ep #05 Com Patricia Rocha - Minha jornada em RH  Bloco 3.JPG') }}" alt="Episódio de Podcast" class="podcast-cover">
+                        <div class="position-absolute top-0 end-0 m-2">
+                            <a href="https://www.youtube.com/watch?v=f_T9-9nKvG0" target="_blank" class="btn btn-danger btn-sm">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Minha Jornada em RH</h5>
+                        <div class="podcast-meta">
+                            <span class="mr-3"><i class="far fa-calendar-alt"></i> 15 de Março, 2024</span>
+                            <span><i class="far fa-clock"></i> 40min</span>
+                        </div>
+                        <p class="card-text">Trajetória profissional e insights sobre gestão de pessoas e recrutamento. <strong>Convidada: Patricia Rocha</strong></p>
+                        <div class="mb-3">
+                            <span class="podcast-category">Recursos Humanos</span>
+                            <span class="podcast-category">Carreira</span>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=f_T9-9nKvG0" target="_blank" class="btn btn-sm btn-outline-primary">Ouvir Agora</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Podcast Episode 6 -->
+            <div class="col-md-6 col-lg-4 podcast-item" data-category="organizacoes lideranca">
+                <div class="card h-100 shadow-sm">
+                    <div class="position-relative">
+                        <img src="{{ url_for('static', filename='img/podcasts/Episódio #09 A humanização das organizações com Éder Monteiro.JPG') }}" alt="Episódio de Podcast" class="podcast-cover">
+                        <div class="position-absolute top-0 end-0 m-2">
+                            <a href="https://www.youtube.com/watch?v=TL5TwZlm0bI" target="_blank" class="btn btn-danger btn-sm">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">A Humanização das Organizações</h5>
+                        <div class="podcast-meta">
+                            <span class="mr-3"><i class="far fa-calendar-alt"></i> 1 de Abril, 2024</span>
+                            <span><i class="far fa-clock"></i> 45min</span>
+                        </div>
+                        <p class="card-text">Como criar empresas mais humanas e centradas nas pessoas. <strong>Convidado: Éder Monteiro</strong></p>
+                        <div class="mb-3">
+                            <span class="podcast-category">Organizações</span>
+                            <span class="podcast-category">Liderança</span>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=TL5TwZlm0bI" target="_blank" class="btn btn-sm btn-outline-primary">Ouvir Agora</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <button class="btn btn-primary">Carregar Mais Episódios</button>
+        </div>
+    </div>
+</section>
+
+<!-- Articles Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">Artigos & Reflexões</h2>
+            <p class="lead">Conteúdos escritos para aprofundar seu conhecimento</p>
+        </div>
+        
+        <div class="row">
+            <!-- Article 1 -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">O Impacto da Inteligência Artificial no Futuro do Trabalho</h5>
+                        <div class="podcast-meta">
+                            <span><i class="far fa-calendar-alt"></i> 10 de Maio, 2025</span>
+                        </div>
+                        <p class="card-text mt-3">Uma análise sobre como a IA está transformando as profissões e quais habilidades serão essenciais para se manter relevante no mercado de trabalho do futuro.</p>
+                        <a href="#" class="btn btn-sm btn-outline-primary">Ler Artigo</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Article 2 -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">5 Práticas de Liderança para Times Remotos</h5>
+                        <div class="podcast-meta">
+                            <span><i class="far fa-calendar-alt"></i> 27 de Abril, 2025</span>
+                        </div>
+                        <p class="card-text mt-3">Estratégias práticas para líderes que precisam gerir equipes distribuídas, mantendo produtividade, engajamento e bem-estar dos colaboradores.</p>
+                        <a href="#" class="btn btn-sm btn-outline-primary">Ler Artigo</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Article 3 -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Burnout: Como Identificar e Prevenir o Esgotamento Profissional</h5>
+                        <div class="podcast-meta">
+                            <span><i class="far fa-calendar-alt"></i> 15 de Abril, 2025</span>
+                        </div>
+                        <p class="card-text mt-3">Um guia para reconhecer os sinais de burnout e implementar estratégias de autocuidado e equilíbrio entre vida pessoal e profissional.</p>
+                        <a href="#" class="btn btn-sm btn-outline-primary">Ler Artigo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="#" class="btn btn-outline-primary">Ver Todos os Artigos</a>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h2 class="mb-3">Receba Novos Conteúdos</h2>
+                <p class="lead mb-0">Assine nossa newsletter e receba conteúdos exclusivos sobre carreira, liderança e desenvolvimento pessoal diretamente no seu email.</p>
+            </div>
+            <div class="col-lg-6">
+                <form id="newsletterForm">
+                    <div class="input-group">
+                        <input type="email" class="form-control form-control-lg" placeholder="Seu melhor email" required>
+                        <div class="input-group-append">
+                            <button class="btn btn-light" type="submit">Assinar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Filter buttons
+        const filterButtons = document.querySelectorAll('.filter-button');
+        const podcastItems = document.querySelectorAll('.podcast-item');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const filterValue = this.getAttribute('data-filter');
+                
+                // Activate current button
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Filter items
+                podcastItems.forEach(item => {
+                    const itemCategories = item.getAttribute('data-category');
+                    
+                    if (filterValue === 'all' || itemCategories.includes(filterValue)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Search functionality
+        const searchInput = document.getElementById('searchPodcast');
+        if (searchInput) {
+            searchInput.addEventListener('keyup', function() {
+                const searchValue = this.value.toLowerCase();
+                
+                podcastItems.forEach(item => {
+                    const title = item.querySelector('.card-title').textContent.toLowerCase();
+                    const description = item.querySelector('.card-text').textContent.toLowerCase();
+                    
+                    if (title.includes(searchValue) || description.includes(searchValue)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        }
+        
+        // Newsletter form
+        const newsletterForm = document.getElementById('newsletterForm');
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                // Here would be the actual form submission code
+                
+                // For now, just show a success message
+                alert('Obrigado por se inscrever em nossa newsletter!');
+                this.reset();
+            });
+        }
+    });
+</script>
+{% endblock %}

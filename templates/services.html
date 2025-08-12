@@ -1,0 +1,632 @@
+{% extends 'public_base.html' %}
+
+{% block title %}Ana Conecta - Serviços{% endblock %}
+
+{% block head_extra %}
+<style>
+    .service-icon-large {
+        font-size: 4rem;
+        margin-bottom: 30px;
+        color: var(--primary-color);
+    }
+    
+    .pricing-header {
+        text-align: center;
+        padding: 20px;
+        background-color: var(--primary-color);
+        color: white;
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
+    
+    .pricing-features {
+        padding: 20px;
+    }
+    
+    .pricing-price {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+    
+    .price-period {
+        font-size: 1rem;
+        color: var(--text-color);
+        opacity: 0.7;
+    }
+    
+    .feature-list li {
+        margin-bottom: 10px;
+        position: relative;
+        padding-left: 30px;
+    }
+    
+    .feature-list li:before {
+        content: "\f00c";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        position: absolute;
+        left: 0;
+        color: var(--primary-color);
+    }
+    
+    .service-cta {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(0,0,0,0.1);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="mb-3">Nossos Serviços</h1>
+                <p class="lead mb-0">Soluções personalizadas para impulsionar seu crescimento pessoal e profissional</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Services Section -->
+<section class="py-5" id="services-main">
+    <div class="container">
+        <div class="row">
+            <!-- Mentoria Individual -->
+            <div class="col-lg-4 mb-5" id="mentoria-individual">
+                <div class="card h-100 shadow">
+                    <div class="card-body text-center">
+                        <div class="service-icon-large">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h3 class="card-title mb-4">Mentoria Individual</h3>
+                        <p class="card-text">Um programa personalizado para seu desenvolvimento profissional, foco em resultados concretos e transformação genuína em sua carreira e liderança.</p>
+                        
+                        <ul class="text-left feature-list list-unstyled mt-4">
+                            <li>Sessões personalizadas one-on-one</li>
+                            <li>Plano de desenvolvimento individualizado</li>
+                            <li>Avaliação de competências e habilidades</li>
+                            <li>Ferramentas e recursos exclusivos</li>
+                            <li>Suporte entre sessões via WhatsApp</li>
+                        </ul>
+                        
+                        <div class="service-cta">
+                            <a href="#mentoria-individual-details" class="btn btn-outline-primary mb-3 mr-2" data-toggle="modal" data-target="#mentoriaIndividualModal">Detalhes do Programa</a>
+                            <a href="/contact" class="btn btn-primary">Solicitar Proposta</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mentoria em Grupo -->
+            <div class="col-lg-4 mb-5" id="mentoria-grupo">
+                <div class="card h-100 shadow">
+                    <div class="card-body text-center">
+                        <div class="service-icon-large">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="card-title mb-4">Mentoria em Grupo</h3>
+                        <p class="card-text">Desenvolvimento colaborativo focado em temas específicos, enriquecido pela troca de experiências e networking entre profissionais com objetivos semelhantes.</p>
+                        
+                        <ul class="text-left feature-list list-unstyled mt-4">
+                            <li>Grupos reduzidos (máximo 8 pessoas)</li>
+                            <li>Temas específicos e aprofundados</li>
+                            <li>Networking qualificado</li>
+                            <li>Exercícios práticos e cases reais</li>
+                            <li>Comunidade exclusiva de participantes</li>
+                        </ul>
+                        
+                        <div class="service-cta">
+                            <a href="#mentoria-grupo-details" class="btn btn-outline-primary mb-3 mr-2" data-toggle="modal" data-target="#mentoriaGrupoModal">Detalhes do Programa</a>
+                            <a href="/contact" class="btn btn-primary">Solicitar Informações</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Palestras e Workshops -->
+            <div class="col-lg-4 mb-5" id="palestras">
+                <div class="card h-100 shadow">
+                    <div class="card-body text-center">
+                        <div class="service-icon-large">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <h3 class="card-title mb-4">Palestras e Workshops</h3>
+                        <p class="card-text">Apresentações dinâmicas e interativas para equipes e eventos corporativos, abordando temas relevantes sobre carreira, liderança e desenvolvimento humano.</p>
+                        
+                        <ul class="text-left feature-list list-unstyled mt-4">
+                            <li>Conteúdo customizado para sua organização</li>
+                            <li>Formato presencial ou online</li>
+                            <li>Metodologias ativas e participativas</li>
+                            <li>Material de apoio exclusivo</li>
+                            <li>Avaliação de impacto pós-evento</li>
+                        </ul>
+                        
+                        <div class="service-cta">
+                            <a href="#palestras-details" class="btn btn-outline-primary mb-3 mr-2" data-toggle="modal" data-target="#palestrasModal">Ver Temas Disponíveis</a>
+                            <a href="/contact" class="btn btn-primary">Solicitar Proposta</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">Investimento</h2>
+            <p class="lead">Escolha o plano que melhor atende às suas necessidades</p>
+        </div>
+        
+        <div class="row">
+            <!-- Plano Básico -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 shadow">
+                    <div class="pricing-header">
+                        <h4 class="mb-0">Mentoria Essencial</h4>
+                    </div>
+                    <div class="card-body pricing-features text-center">
+                        <div class="pricing-price">R$ 1.500<span class="price-period">/mês</span></div>
+                        <p class="text-muted mb-4">Programa de 3 meses</p>
+                        
+                        <ul class="text-left feature-list list-unstyled">
+                            <li>2 sessões mensais (1h)</li>
+                            <li>Plano de desenvolvimento básico</li>
+                            <li>Materiais de apoio exclusivos</li>
+                            <li>Suporte via e-mail</li>
+                        </ul>
+                        
+                        <a href="/contact" class="btn btn-primary btn-lg mt-4">Contratar</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Plano Avançado -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 shadow border-primary">
+                    <div class="pricing-header" style="background-color: #2980b9;">
+                        <h4 class="mb-0">Mentoria Transformação</h4>
+                        <span class="badge badge-light mt-2">Mais Popular</span>
+                    </div>
+                    <div class="card-body pricing-features text-center">
+                        <div class="pricing-price">R$ 2.000<span class="price-period">/mês</span></div>
+                        <p class="text-muted mb-4">Programa de 6 meses</p>
+                        
+                        <ul class="text-left feature-list list-unstyled">
+                            <li>4 sessões mensais (1h)</li>
+                            <li>Plano de desenvolvimento completo</li>
+                            <li>Materiais e ferramentas exclusivas</li>
+                            <li>Suporte via WhatsApp</li>
+                            <li>Avaliação de competências</li>
+                            <li>1 sessão de acompanhamento pós-programa</li>
+                        </ul>
+                        
+                        <a href="/contact" class="btn btn-primary btn-lg mt-4">Contratar</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Plano Premium -->
+            <div class="col-lg-4 col-md-6 mb-4 mx-auto">
+                <div class="card h-100 shadow">
+                    <div class="pricing-header">
+                        <h4 class="mb-0">Mentoria Elite</h4>
+                    </div>
+                    <div class="card-body pricing-features text-center">
+                        <div class="pricing-price">R$ 3.000<span class="price-period">/mês</span></div>
+                        <p class="text-muted mb-4">Programa de 6 meses</p>
+                        
+                        <ul class="text-left feature-list list-unstyled">
+                            <li>4 sessões mensais (1h)</li>
+                            <li>Plano de desenvolvimento premium</li>
+                            <li>Acesso a todos os materiais e cursos</li>
+                            <li>Suporte ilimitado via WhatsApp</li>
+                            <li>Avaliação 360° de competências</li>
+                            <li>Acompanhamento com stakeholders</li>
+                            <li>3 sessões de follow-up pós-programa</li>
+                        </ul>
+                        
+                        <a href="/contact" class="btn btn-primary btn-lg mt-4">Contratar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <p class="mb-2">Precisa de um plano personalizado para sua empresa?</p>
+            <a href="/contact" class="btn btn-outline-primary">Entre em contato para uma proposta corporativa</a>
+        </div>
+    </div>
+</section>
+
+<!-- Methodology Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-5 mb-4 mb-lg-0">
+                <img src="{{ url_for('static', filename='img/methodology.jpg') }}" alt="Metodologia Ana Conecta" class="img-fluid rounded shadow">
+            </div>
+            <div class="col-lg-7">
+                <h2 class="mb-4">Nossa Metodologia</h2>
+                <p class="lead mb-4">Um processo estruturado para resultados consistentes</p>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="feature-item">
+                            <i class="fas fa-search"></i>
+                            <div>
+                                <h5>Diagnóstico</h5>
+                                <p>Avaliação profunda de necessidades, competências e objetivos.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="feature-item">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <div>
+                                <h5>Planejamento</h5>
+                                <p>Definição de metas, estratégias e indicadores de progresso.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="feature-item">
+                            <i class="fas fa-tasks"></i>
+                            <div>
+                                <h5>Desenvolvimento</h5>
+                                <p>Sessões estruturadas com foco em competências específicas.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="feature-item">
+                            <i class="fas fa-chart-line"></i>
+                            <div>
+                                <h5>Acompanhamento</h5>
+                                <p>Monitoramento contínuo de progresso e ajustes necessários.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="/contact" class="btn btn-primary mt-3">Agende uma Conversa Inicial</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">O Que Nossos Clientes Dizem</h2>
+            <p class="lead">Histórias reais de transformação e crescimento</p>
+        </div>
+        
+        <div id="testimonialsCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="card border-0 shadow">
+                                <div class="card-body p-5 text-center">
+                                    <img src="{{ url_for('static', filename='img/testimonial-1.jpg') }}" alt="Depoimento" class="rounded-circle mb-4" width="80">
+                                    <blockquote class="blockquote">
+                                        <p>"A mentoria com Ana Rosa foi um divisor de águas na minha carreira. Consegui superar bloqueios que me impediam de assumir novos desafios e, em menos de 6 meses, fui promovida a uma posição de liderança que sempre almejei. A abordagem personalizada e o acompanhamento constante fizeram toda a diferença."</p>
+                                        <footer class="blockquote-footer">Carla Mendes, Gerente de Marketing</footer>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="carousel-item">
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="card border-0 shadow">
+                                <div class="card-body p-5 text-center">
+                                    <img src="{{ url_for('static', filename='img/testimonial-2.jpg') }}" alt="Depoimento" class="rounded-circle mb-4" width="80">
+                                    <blockquote class="blockquote">
+                                        <p>"Participar da mentoria em grupo foi uma experiência enriquecedora. Além do aprendizado técnico sobre liderança, a troca com outros profissionais ampliou minha visão sobre desafios semelhantes em diferentes contextos. As ferramentas práticas que aprendi estão tendo um impacto real no dia a dia da minha equipe."</p>
+                                        <footer class="blockquote-footer">Roberto Almeida, Coordenador de RH</footer>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="carousel-item">
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="card border-0 shadow">
+                                <div class="card-body p-5 text-center">
+                                    <img src="{{ url_for('static', filename='img/testimonial-3.jpg') }}" alt="Depoimento" class="rounded-circle mb-4" width="80">
+                                    <blockquote class="blockquote">
+                                        <p>"Contratamos a Ana Rosa para uma palestra sobre comunicação e liderança em nossa empresa. O feedback dos colaboradores foi extremamente positivo. Ela consegue combinar profundidade de conteúdo com uma forma acessível e envolvente de comunicar, o que resultou em mudanças práticas na forma como nossas equipes se relacionam."</p>
+                                        <footer class="blockquote-footer">Fernanda Costa, Diretora de Operações</footer>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <ol class="carousel-indicators position-relative mt-3">
+                <li data-target="#testimonialsCarousel" data-slide-to="0" class="active bg-secondary"></li>
+                <li data-target="#testimonialsCarousel" data-slide-to="1" class="bg-secondary"></li>
+                <li data-target="#testimonialsCarousel" data-slide-to="2" class="bg-secondary"></li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">Perguntas Frequentes</h2>
+            <p class="lead">Respostas para as dúvidas mais comuns sobre nossos serviços</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="accordion" id="faqAccordion">
+                    <div class="card mb-3">
+                        <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne">
+                                    Quanto tempo dura uma mentoria?
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseOne" class="collapse show" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                Nossos programas de mentoria individual têm duração mínima de 3 meses, mas recomendamos 6 meses para resultados mais consistentes. Mentorias em grupo geralmente duram de 2 a 3 meses, com encontros semanais. A duração é definida com base nos objetivos específicos a serem alcançados.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-header" id="headingTwo">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo">
+                                    Como são realizadas as sessões de mentoria?
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseTwo" class="collapse" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                As sessões podem ser realizadas online (via Zoom ou Google Meet) ou presencialmente em São Paulo, dependendo da sua preferência e disponibilidade. Muitos clientes optam pelo formato online pela praticidade e flexibilidade de horários. Cada sessão tem duração de 1 hora, com frequência semanal ou quinzenal.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-header" id="headingThree">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree">
+                                    Quais formas de pagamento são aceitas?
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseThree" class="collapse" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                Aceitamos pagamentos via PIX, transferência bancária, boleto e cartão de crédito (com possibilidade de parcelamento em até 6x sem juros). Para empresas, emitimos nota fiscal e oferecemos condições especiais para contratos corporativos.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-header" id="headingFour">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFour">
+                                    É possível cancelar a mentoria após iniciada?
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseFour" class="collapse" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                Sim, entendemos que imprevistos acontecem. Em caso de cancelamento, aplicamos uma política de reembolso proporcional ao período já utilizado, com uma taxa administrativa. Recomendamos, no entanto, uma conversa prévia para avaliarmos possíveis ajustes no programa antes de optar pelo cancelamento.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-header" id="headingFive">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFive">
+                                    Existe alguma garantia de resultados?
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseFive" class="collapse" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                Os resultados dependem de diversos fatores, incluindo seu comprometimento com o processo. Oferecemos garantia de satisfação nas primeiras 2 semanas - se você sentir que a mentoria não está atendendo suas expectativas, pode cancelar sem custos adicionais. Nosso compromisso é com seu desenvolvimento, e trabalhamos continuamente para ajustar o programa às suas necessidades.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-5">
+            <p class="mb-3">Ainda tem dúvidas? Entre em contato conosco</p>
+            <a href="/contact" class="btn btn-primary">Fale Conosco</a>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container text-center">
+        <h2 class="mb-4">Pronto para transformar sua carreira ou equipe?</h2>
+        <p class="lead mb-4">Agende uma conversa inicial sem compromisso e descubra como nossos serviços podem impulsionar seu desenvolvimento.</p>
+        <a href="/contact" class="btn btn-light btn-lg">Agendar Conversa</a>
+    </div>
+</section>
+
+<!-- Modals for Service Details -->
+<!-- Mentoria Individual Modal -->
+<div class="modal fade" id="mentoriaIndividualModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Mentoria Individual</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4 text-center mb-4 mb-md-0">
+                        <div class="service-icon-large">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <h4 class="mb-3">Sobre o Programa</h4>
+                        <p>A Mentoria Individual é um programa personalizado para acelerar seu desenvolvimento profissional, com foco em resultados concretos e transformação genuína em sua carreira e liderança.</p>
+                        
+                        <h5 class="mt-4 mb-3">Benefícios</h5>
+                        <ul>
+                            <li>Clareza sobre objetivos de carreira e passos concretos para alcançá-los</li>
+                            <li>Desenvolvimento de competências específicas para seu momento profissional</li>
+                            <li>Feedback honesto e direcionado sobre pontos de melhoria</li>
+                            <li>Ampliação da autoconfiança e capacidade de tomada de decisão</li>
+                            <li>Equilíbrio entre vida pessoal e profissional</li>
+                        </ul>
+                        
+                        <h5 class="mt-4 mb-3">Estrutura do Programa</h5>
+                        <p>O programa é dividido em 3 etapas principais:</p>
+                        <ol>
+                            <li><strong>Diagnóstico e Planejamento (2 semanas):</strong> Avaliação profunda de perfil, competências e definição de objetivos.</li>
+                            <li><strong>Desenvolvimento (10 a 22 semanas):</strong> Sessões semanais ou quinzenais focadas em competências específicas.</li>
+                            <li><strong>Consolidação (2 semanas):</strong> Revisão de aprendizados, ajustes no plano de desenvolvimento e próximos passos.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <a href="/contact" class="btn btn-primary">Solicitar Proposta</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Mentoria em Grupo Modal -->
+<div class="modal fade" id="mentoriaGrupoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Mentoria em Grupo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4 text-center mb-4 mb-md-0">
+                        <div class="service-icon-large">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <h4 class="mb-3">Sobre o Programa</h4>
+                        <p>A Mentoria em Grupo oferece desenvolvimento colaborativo focado em temas específicos, enriquecido pela troca de experiências e networking entre profissionais com objetivos semelhantes.</p>
+                        
+                        <h5 class="mt-4 mb-3">Benefícios</h5>
+                        <ul>
+                            <li>Aprendizado acelerado através da experiência coletiva</li>
+                            <li>Networking qualificado com profissionais de diferentes setores</li>
+                            <li>Exposição a diferentes perspectivas sobre desafios comuns</li>
+                            <li>Custo mais acessível em comparação à mentoria individual</li>
+                            <li>Senso de comunidade e apoio mútuo</li>
+                        </ul>
+                        
+                        <h5 class="mt-4 mb-3">Temas Disponíveis</h5>
+                        <ul>
+                            <li><strong>Liderança para Novos Gestores:</strong> Programa de 8 semanas para profissionais em primeira posição de liderança.</li>
+                            <li><strong>Comunicação e Influência:</strong> Programa de 6 semanas focado em habilidades de comunicação e persuasão.</li>
+                            <li><strong>Carreira e Propósito:</strong> Programa de 6 semanas para redefinição de objetivos profissionais.</li>
+                            <li><strong>Produtividade e Equilíbrio:</strong> Programa de 4 semanas sobre gestão de tempo e energia.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <a href="/contact" class="btn btn-primary">Solicitar Informações</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Palestras Modal -->
+<div class="modal fade" id="palestrasModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Palestras e Workshops</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4 text-center mb-4 mb-md-0">
+                        <div class="service-icon-large">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <h4 class="mb-3">Sobre o Serviço</h4>
+                        <p>Palestras e workshops dinâmicos e interativos para equipes e eventos corporativos, abordando temas relevantes sobre carreira, liderança, transformação digital e desenvolvimento humano.</p>
+                        
+                        <h5 class="mt-4 mb-3">Formatos Disponíveis</h5>
+                        <ul>
+                            <li><strong>Palestras (1-2 horas):</strong> Apresentações inspiradoras e informativas para grandes grupos.</li>
+                            <li><strong>Workshops (3-8 horas):</strong> Sessões práticas e interativas com atividades em grupo.</li>
+                            <li><strong>Webinars (1 hora):</strong> Eventos online com possibilidade de interação ao vivo.</li>
+                            <li><strong>Programas Imersivos (1-3 dias):</strong> Experiências intensivas de aprendizado para transformação acelerada.</li>
+                        </ul>
+                        
+                        <h5 class="mt-4 mb-3">Principais Temas</h5>
+                        <ul>
+                            <li><strong>Liderança Humanizada:</strong> Como liderar equipes com empatia e resultados em tempos de transformação.</li>
+                            <li><strong>Comunicação de Alto Impacto:</strong> Técnicas para comunicar com clareza, persuasão e autenticidade.</li>
+                            <li><strong>Cultura de Inovação:</strong> Desenvolvendo mindset e práticas para fomentar a inovação nas organizações.</li>
+                            <li><strong>Inteligência Emocional no Trabalho:</strong> Habilidades emocionais para melhorar relacionamentos e performance.</li>
+                            <li><strong>Gestão de Carreira:</strong> Estratégias para desenvolvimento profissional contínuo e alinhado ao propósito.</li>
+                            <li><strong>Produtividade e Bem-estar:</strong> Práticas para alta performance sustentável e equilíbrio pessoal.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <a href="/contact" class="btn btn-primary">Solicitar Proposta</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize carousel
+        $('#testimonialsCarousel').carousel({
+            interval: 8000
+        });
+    });
+</script>
+{% endblock %}

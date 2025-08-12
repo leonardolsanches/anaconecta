@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="98" fill="#f5f5f5" stroke="#2D3E50" stroke-width="2"/>
+  
+  <!-- Stylized person silhouette -->
+  <!-- Head -->
+  <circle cx="100" cy="80" r="40" fill="#2D3E50"/>
+  
+  <!-- Body/shoulders -->
+  <path d="M100,120 Q130,120 150,150 L150,180 Q130,200 100,200 Q70,200 50,180 L50,150 Q70,120 100,120" fill="#2D3E50"/>
+  
+  <!-- Stylized facial features - simplified for avatar -->
+  <!-- Eyes -->
+  <circle cx="80" cy="75" r="5" fill="white"/>
+  <circle cx="120" cy="75" r="5" fill="white"/>
+
+  <!-- Stylized smile -->
+  <path d="M75,95 Q100,115 125,95" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Optional hair element -->
+  <path d="M60,60 Q80,30 100,40 Q120,30 140,60" fill="none" stroke="#2D3E50" stroke-width="8"/>
+  
+  <!-- Initials -->
+  <text x="100" y="195" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="white">AR</text>
+</svg>

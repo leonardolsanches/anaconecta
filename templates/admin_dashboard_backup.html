@@ -1,0 +1,1106 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard Administrativo - Ana Conecta{% endblock %}
+
+{% block head_extra %}
+<style>
+    .dashboard-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 20px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+    
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .dashboard-card h3 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    
+    .dashboard-card p {
+        margin-bottom: 0;
+        opacity: 0.9;
+    }
+    
+    .dashboard-card.clients {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    }
+    
+    .dashboard-card.mentorships {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .dashboard-card.initiatives {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+    
+    .dashboard-card.content {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+    
+    .flow-diagram {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        margin-bottom: 30px;
+    }
+    
+    .flow-step {
+        text-align: center;
+        padding: 20px;
+        margin: 10px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        border: 2px solid #e9ecef;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .flow-step:hover {
+        background: #e3f2fd;
+        border-color: #2196f3;
+        transform: scale(1.05);
+    }
+    
+    .flow-step i {
+        font-size: 2rem;
+        color: #2196f3;
+        margin-bottom: 10px;
+        display: block;
+    }
+    
+    .flow-step h5 {
+        margin-bottom: 5px;
+        color: #333;
+    }
+    
+    .flow-step p {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 0;
+    }
+    
+    .status-indicators {
+        margin-top: 20px;
+    }
+    
+    .status-badge {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        margin: 3px;
+        font-weight: 500;
+    }
+    
+    .status-pending { background: #fff3cd; color: #856404; }
+    .status-active { background: #d4edda; color: #155724; }
+    .status-completed { background: #d1ecf1; color: #0c5460; }
+    .status-cancelled { background: #f8d7da; color: #721c24; }
+    
+    .quick-actions {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+    
+    .quick-action-btn {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 10px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    
+    .quick-action-btn:hover {
+        color: white;
+        text-decoration: none;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+    
+    .recent-activities {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    
+    .activity-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .activity-item:last-child {
+        border-bottom: none;
+    }
+    
+    .activity-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        font-size: 1.2rem;
+    }
+    
+    .activity-icon.new { background: #e8f5e8; color: #4caf50; }
+    .activity-icon.update { background: #e3f2fd; color: #2196f3; }
+    .activity-icon.complete { background: #f3e5f5; color: #9c27b0; }
+    
+    /* Dashboard Summary Table Styles */
+    .dashboard-summary-table {
+        font-size: 0.95rem;
+        margin-bottom: 0;
+        border: 2px solid #343a40;
+        border-radius: 8px;
+        overflow: visible;
+        background-color: white;
+        width: 100%;
+    }
+    
+    .dashboard-summary-table thead th {
+        background-color: #343a40 !important;
+        color: white !important;
+        border: 1px solid #495057;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+        padding: 15px 10px;
+        text-align: center;
+    }
+    
+    .dashboard-summary-table tbody tr {
+        transition: all 0.3s ease;
+        border-left: 4px solid transparent;
+    }
+    
+    .dashboard-summary-table tbody tr:hover {
+        background-color: #f8f9fa;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        transform: translateY(-1px);
+    }
+    
+    .table-row-clients:hover { border-left-color: #11998e; }
+    .table-row-mentorships:hover { border-left-color: #667eea; }
+    .table-row-initiatives:hover { border-left-color: #f5576c; }
+    .table-row-content:hover { border-left-color: #4facfe; }
+    .table-row-financial:hover { border-left-color: #ffd700; }
+    
+    .icon-container {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        color: white;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .clients-icon { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+    .mentorships-icon { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    .initiatives-icon { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+    .content-icon { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+    .financial-icon { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); color: #333; }
+    
+    .metric-value {
+        font-size: 1.4rem;
+        font-weight: 700;
+        display: block;
+        line-height: 1.2;
+    }
+    
+    .dashboard-summary-table td {
+        padding: 20px 10px;
+        vertical-align: middle;
+        border: 1px solid #dee2e6;
+        text-align: center;
+    }
+    
+    .dashboard-summary-table tbody tr:nth-child(odd) {
+        background-color: #f8f9fa;
+    }
+    
+    .dashboard-summary-table tbody tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+    
+    .dashboard-summary-table .btn {
+        font-size: 0.8rem;
+        padding: 5px 10px;
+        margin-bottom: 3px;
+    }
+    
+    @media (max-width: 768px) {
+        .dashboard-summary-table {
+            font-size: 0.85rem;
+        }
+        
+        .metric-value {
+            font-size: 1.2rem;
+        }
+        
+        .icon-container {
+            width: 40px;
+            height: 40px;
+        }
+        
+        .dashboard-summary-table .btn {
+            padding: 3px 6px;
+            font-size: 0.75rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">
+                <i class="fas fa-tachometer-alt mr-3"></i>
+                Dashboard Administrativo
+                <small class="text-muted">- Ana Rosa</small>
+            </h1>
+        </div>
+    </div>
+
+    <!-- ===== TABELA RESUMO EXECUTIVO - DESTAQUE MÁXIMO ===== -->
+    <div class="row mb-5" style="background: linear-gradient(135deg, #e3f2fd, #bbdefb); padding: 20px; border-radius: 15px; border: 4px solid #1976d2;">
+        <div class="col-12">
+            <div class="text-center mb-4" style="background: #1976d2; color: white; padding: 20px; border-radius: 10px; margin: -20px -20px 20px -20px;">
+                <h1 style="font-size: 2.5rem; margin: 0;">
+                    📊 TABELA RESUMO EXECUTIVO
+                </h1>
+                <h3 style="margin: 10px 0 0 0; opacity: 0.9;">
+                    Containers = Linhas | Etapas do Processo = Colunas
+                </h3>
+            </div>
+            
+            <table class="table table-bordered" style="background: white; border: 3px solid #1976d2; border-radius: 10px; overflow: hidden; font-size: 1.1rem;">
+                <thead>
+                    <tr>
+                        <th class="text-center" style="background: #37474f; color: white; padding: 20px; border: none;">
+                            <i class="fas fa-cube fa-lg"></i><br><strong>CONTAINER</strong>
+                        </th>
+                        <th class="text-center" style="background: #6c757d; color: white; padding: 20px; border: none;">
+                            <i class="fas fa-play fa-lg"></i><br><strong>INICIAL</strong>
+                        </th>
+                        <th class="text-center" style="background: #fd7e14; color: white; padding: 20px; border: none;">
+                            <i class="fas fa-clock fa-lg"></i><br><strong>EM ANDAMENTO</strong>
+                        </th>
+                        <th class="text-center" style="background: #20c997; color: white; padding: 20px; border: none;">
+                            <i class="fas fa-check fa-lg"></i><br><strong>CONCLUÍDO</strong>
+                        </th>
+                        <th class="text-center" style="background: #007bff; color: white; padding: 20px; border: none;">
+                            <i class="fas fa-tools fa-lg"></i><br><strong>AÇÕES</strong>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- LINHA 1: CLIENTES -->
+                    <tr style="border-left: 6px solid #007bff;">
+                        <td class="text-center" style="padding: 25px; background: #f8f9fa; border: 2px solid #dee2e6;">
+                            <i class="fas fa-users fa-2x text-primary mb-2"></i><br>
+                            <strong style="font-size: 1.2rem;">CLIENTES</strong><br>
+                            <small class="text-muted">Total: {{ stats.total_clients }}</small>
+                        </td>
+                        <td class="text-center" style="padding: 25px; border: 2px solid #dee2e6;">
+                            <span class="badge badge-secondary" style="font-size: 1.5rem; padding: 15px 20px;">{{ stats.prospect_clients }}</span><br>
+                            <strong>Prospects</strong>
+                        </td>
+                        <td class="text-center" style="padding: 25px; border: 2px solid #dee2e6;">
+                            <span class="badge badge-warning" style="font-size: 1.5rem; padding: 15px 20px;">{{ stats.active_clients }}</span><br>
+                            <strong>Ativos</strong>
+                        </td>
+                        <td class="text-center" style="padding: 25px; border: 2px solid #dee2e6;">
+                            <span class="badge badge-success" style="font-size: 1.5rem; padding: 15px 20px;">0</span><br>
+                            <strong>Finalizados</strong>
+                        </td>
+                        <td class="text-center" style="padding: 25px; border: 2px solid #dee2e6;">
+                            <a href="/admin/clients" class="btn btn-primary mr-1">Ver</a>
+                            <a href="https://wa.me/5521981130624" target="_blank" class="btn btn-success">WhatsApp</a>
+                        </td>
+                    </tr>
+                    
+                    <!-- LINHA 2: MENTORSHIPS -->
+                    <tr style="border-left: 6px solid #28a745;">
+                        <td class="text-center" style="padding: 25px; background: #f8f9fa; border: 2px solid #dee2e6;">
+                            <i class="fas fa-graduation-cap fa-2x text-success mb-2"></i><br>
+                            <strong style="font-size: 1.2rem;">MENTORSHIPS</strong><br>
+                            <small class="text-muted">Total: {{ stats.total_mentorships }}</small>
+                        </td>
+                        <td class="text-center" style="padding: 25px; border: 2px solid #dee2e6;">
+                            <span class="badge badge-secondary" style="font-size: 1.5rem; padding: 15px 20px;">0</span><br>
+                            <strong>Inicial</strong>
+                        </td>
+                        <td class="text-center" style="padding: 25px; border: 2px solid #dee2e6;">
+                            <span class="badge badge-warning" style="font-size: 1.5rem; padding: 15px 20px;">{{ stats.active_mentorships }}</span><br>
+                            <strong>Executando</strong>
+                        </td>
+                        <td class="text-center" style="padding: 25px; border: 2px solid #dee2e6;">
+                            <span class="badge badge-success" style="font-size: 1.5rem; padding: 15px 20px;">0</span><br>
+                            <strong>Finalizados</strong>
+                        </td>
+                        <td class="text-center" style="padding: 25px; border: 2px solid #dee2e6;">
+                            <a href="/admin/mentorships" class="btn btn-primary mr-1">Ver</a>
+                            <a href="https://calendar.google.com" target="_blank" class="btn btn-info">Agendar</a>
+                        </td>
+                    </tr>
+                    
+                    <!-- LINHA 3: INICIATIVAS -->
+                    <tr style="border-left: 6px solid #ffc107;">
+                        <td class="text-center" style="padding: 25px; background: #f8f9fa; border: 2px solid #dee2e6;">
+                            <i class="fas fa-lightbulb fa-2x text-warning mb-2"></i><br>
+                            <strong style="font-size: 1.2rem;">INICIATIVAS</strong><br>
+                            <small class="text-muted">Total: {{ stats.total_initiatives }}</small>
+                        </td>
+                        <td class="text-center" style="padding: 25px; border: 2px solid #dee2e6;">
+                            <span class="badge badge-secondary" style="font-size: 1.5rem; padding: 15px 20px;">{{ stats.pending_initiatives }}</span><br>
+                            <strong>Planejamento</strong>
+                        </td>
+                        <td class="text-center" style="padding: 25px; border: 2px solid #dee2e6;">
+                            <span class="badge badge-warning" style="font-size: 1.5rem; padding: 15px 20px;">0</span><br>
+                            <strong>Executando</strong>
+                        </td>
+                        <td class="text-center" style="padding: 25px; border: 2px solid #dee2e6;">
+                            <span class="badge badge-success" style="font-size: 1.5rem; padding: 15px 20px;">0</span><br>
+                            <strong>Concluídas</strong>
+                        </td>
+                        <td class="text-center" style="padding: 25px; border: 2px solid #dee2e6;">
+                            <a href="/admin/initiatives" class="btn btn-primary mr-1">Ver</a>
+                            <a href="https://docs.google.com" target="_blank" class="btn btn-warning">Docs</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Estatísticas Principais em Cards -->
+                                <td class="text-center">
+                                    <div class="icon-container mentorships-icon">
+                                        <i class="fas fa-graduation-cap fa-lg"></i>
+                                    </div>
+                                </td>
+                                <td>
+                                    <strong>Mentorships</strong><br>
+                                    <small class="text-muted">Acompanhamento de processos</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value">{{ stats.total_mentorships }}</span><br>
+                                    <small class="text-info">+1 esta semana</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value text-success">{{ stats.active_mentorships }}</span><br>
+                                    <small class="text-muted">Em andamento</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value text-warning">{{ (stats.total_mentorships - stats.active_mentorships)|abs }}</span><br>
+                                    <small class="text-muted">Aguardando</small>
+                                </td>
+                                <td>
+                                    <a href="/admin/mentorships" class="btn btn-sm btn-outline-primary mr-1">
+                                        <i class="fas fa-eye"></i> Ver
+                                    </a>
+                                    <a href="https://calendar.google.com/calendar" target="_blank" class="btn btn-sm btn-outline-info">
+                                        <i class="fas fa-calendar"></i> Agendar
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr class="table-row-initiatives">
+                                <td class="text-center">
+                                    <div class="icon-container initiatives-icon">
+                                        <i class="fas fa-lightbulb fa-lg"></i>
+                                    </div>
+                                </td>
+                                <td>
+                                    <strong>Iniciativas</strong><br>
+                                    <small class="text-muted">Projetos e ideias</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value">{{ stats.total_initiatives }}</span><br>
+                                    <small class="text-primary">Total cadastrado</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value text-success">{{ (stats.total_initiatives - stats.pending_initiatives)|abs }}</span><br>
+                                    <small class="text-muted">Executando</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value text-warning">{{ stats.pending_initiatives }}</span><br>
+                                    <small class="text-muted">Planejamento</small>
+                                </td>
+                                <td>
+                                    <a href="/admin/initiatives" class="btn btn-sm btn-outline-primary mr-1">
+                                        <i class="fas fa-eye"></i> Ver
+                                    </a>
+                                    <a href="https://docs.google.com/document" target="_blank" class="btn btn-sm btn-outline-warning">
+                                        <i class="fas fa-file-alt"></i> Docs
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr class="table-row-content">
+                                <td class="text-center">
+                                    <div class="icon-container content-icon">
+                                        <i class="fas fa-microphone fa-lg"></i>
+                                    </div>
+                                </td>
+                                <td>
+                                    <strong>Conteúdo</strong><br>
+                                    <small class="text-muted">Podcasts e materiais</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value">12</span><br>
+                                    <small class="text-primary">Episódios totais</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value text-success">6</span><br>
+                                    <small class="text-muted">Publicados</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value text-warning">2</span><br>
+                                    <small class="text-muted">Em produção</small>
+                                </td>
+                                <td>
+                                    <a href="/institutional" class="btn btn-sm btn-outline-primary mr-1">
+                                        <i class="fas fa-eye"></i> Ver
+                                    </a>
+                                    <a href="https://studio.youtube.com" target="_blank" class="btn btn-sm btn-outline-danger">
+                                        <i class="fab fa-youtube"></i> Studio
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr class="table-row-financial">
+                                <td class="text-center">
+                                    <div class="icon-container financial-icon">
+                                        <i class="fas fa-chart-line fa-lg"></i>
+                                    </div>
+                                </td>
+                                <td>
+                                    <strong>Financeiro</strong><br>
+                                    <small class="text-muted">Receitas e pagamentos</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value">R$ 15.700</span><br>
+                                    <small class="text-primary">Meta mensal</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value text-success">R$ 12.500</span><br>
+                                    <small class="text-muted">Recebido</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value text-warning">R$ 3.200</span><br>
+                                    <small class="text-muted">A receber</small>
+                                </td>
+                                <td>
+                                    <a href="#" onclick="openPaymentPanel()" class="btn btn-sm btn-outline-primary mr-1">
+                                        <i class="fas fa-credit-card"></i> Pagar
+                                    </a>
+                                    <a href="#" onclick="openReceiptsPanel()" class="btn btn-sm btn-outline-info">
+                                        <i class="fas fa-receipt"></i> Recibos
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estatísticas Principais em Cards -->
+    <div class="row mt-4">
+        <div class="col-lg-3 col-md-6">
+            <div class="dashboard-card clients">
+                <h3>{{ stats.total_clients }}</h3>
+                <p>Total de Clientes</p>
+                <div class="status-indicators">
+                    <span class="status-badge status-pending">{{ stats.prospect_clients }} Prospects</span>
+                    <span class="status-badge status-active">{{ stats.active_clients }} Ativos</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="dashboard-card mentorships">
+                <h3>{{ stats.total_mentorships }}</h3>
+                <p>Mentorships</p>
+                <div class="status-indicators">
+                    <span class="status-badge status-active">{{ stats.active_mentorships }} Em Andamento</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="dashboard-card initiatives">
+                <h3>{{ stats.total_initiatives }}</h3>
+                <p>Iniciativas</p>
+                <div class="status-indicators">
+                    <span class="status-badge status-pending">{{ stats.pending_initiatives }} Pendentes</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="dashboard-card content">
+                <h3>12</h3>
+                <p>Episódios de Podcast</p>
+                <div class="status-indicators">
+                    <span class="status-badge status-completed">6 Publicados</span>
+                    <span class="status-badge status-pending">2 Em Produção</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="flow-diagram">
+                <h3 class="mb-4 text-center">
+                    <i class="fas fa-table mr-2"></i>
+                    Resumo Executivo - Situação Geral
+                </h3>
+                
+                <!-- Tabela de Resumo Geral -->
+                <div class="table-responsive mb-4">
+                    <table class="table table-hover dashboard-summary-table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th width="5%"><i class="fas fa-layer-group"></i></th>
+                                <th width="25%">Categoria</th>
+                                <th width="15%">Total</th>
+                                <th width="15%">Ativos</th>
+                                <th width="15%">Pendentes</th>
+                                <th width="25%">Ações Rápidas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="table-row-clients">
+                                <td class="text-center">
+                                    <div class="icon-container clients-icon">
+                                        <i class="fas fa-users fa-lg"></i>
+                                    </div>
+                                </td>
+                                <td>
+                                    <strong>Clientes</strong><br>
+                                    <small class="text-muted">Gestão de relacionamentos</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value">{{ stats.total_clients }}</span><br>
+                                    <small class="text-success">+2 este mês</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value text-success">{{ stats.active_clients }}</span><br>
+                                    <small class="text-muted">Faturando</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value text-warning">{{ stats.prospect_clients }}</span><br>
+                                    <small class="text-muted">Em prospecção</small>
+                                </td>
+                                <td>
+                                    <a href="/admin/clients" class="btn btn-sm btn-outline-primary mr-1">
+                                        <i class="fas fa-eye"></i> Ver
+                                    </a>
+                                    <a href="https://wa.me/5521981130624" target="_blank" class="btn btn-sm btn-outline-success">
+                                        <i class="fab fa-whatsapp"></i> Contato
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr class="table-row-mentorships">
+                                <td class="text-center">
+                                    <div class="icon-container mentorships-icon">
+                                        <i class="fas fa-graduation-cap fa-lg"></i>
+                                    </div>
+                                </td>
+                                <td>
+                                    <strong>Mentorships</strong><br>
+                                    <small class="text-muted">Acompanhamento de processos</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value">{{ stats.total_mentorships }}</span><br>
+                                    <small class="text-info">+1 esta semana</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value text-success">{{ stats.active_mentorships }}</span><br>
+                                    <small class="text-muted">Em andamento</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value text-warning">{{ (stats.total_mentorships - stats.active_mentorships)|abs }}</span><br>
+                                    <small class="text-muted">Aguardando</small>
+                                </td>
+                                <td>
+                                    <a href="/admin/mentorships" class="btn btn-sm btn-outline-primary mr-1">
+                                        <i class="fas fa-eye"></i> Ver
+                                    </a>
+                                    <a href="https://calendar.google.com/calendar" target="_blank" class="btn btn-sm btn-outline-info">
+                                        <i class="fas fa-calendar"></i> Agendar
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr class="table-row-initiatives">
+                                <td class="text-center">
+                                    <div class="icon-container initiatives-icon">
+                                        <i class="fas fa-lightbulb fa-lg"></i>
+                                    </div>
+                                </td>
+                                <td>
+                                    <strong>Iniciativas</strong><br>
+                                    <small class="text-muted">Projetos e ideias</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value">{{ stats.total_initiatives }}</span><br>
+                                    <small class="text-primary">Total cadastrado</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value text-success">{{ (stats.total_initiatives - stats.pending_initiatives)|abs }}</span><br>
+                                    <small class="text-muted">Executando</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value text-warning">{{ stats.pending_initiatives }}</span><br>
+                                    <small class="text-muted">Planejamento</small>
+                                </td>
+                                <td>
+                                    <a href="/admin/initiatives" class="btn btn-sm btn-outline-primary mr-1">
+                                        <i class="fas fa-eye"></i> Ver
+                                    </a>
+                                    <a href="https://docs.google.com/document" target="_blank" class="btn btn-sm btn-outline-warning">
+                                        <i class="fas fa-file-alt"></i> Docs
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr class="table-row-content">
+                                <td class="text-center">
+                                    <div class="icon-container content-icon">
+                                        <i class="fas fa-microphone fa-lg"></i>
+                                    </div>
+                                </td>
+                                <td>
+                                    <strong>Conteúdo</strong><br>
+                                    <small class="text-muted">Podcasts e materiais</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value">12</span><br>
+                                    <small class="text-primary">Episódios totais</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value text-success">6</span><br>
+                                    <small class="text-muted">Publicados</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value text-warning">2</span><br>
+                                    <small class="text-muted">Em produção</small>
+                                </td>
+                                <td>
+                                    <a href="/institutional" class="btn btn-sm btn-outline-primary mr-1">
+                                        <i class="fas fa-eye"></i> Ver
+                                    </a>
+                                    <a href="https://studio.youtube.com" target="_blank" class="btn btn-sm btn-outline-danger">
+                                        <i class="fab fa-youtube"></i> Studio
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr class="table-row-financial">
+                                <td class="text-center">
+                                    <div class="icon-container financial-icon">
+                                        <i class="fas fa-chart-line fa-lg"></i>
+                                    </div>
+                                </td>
+                                <td>
+                                    <strong>Financeiro</strong><br>
+                                    <small class="text-muted">Receitas e pagamentos</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value">R$ 15.700</span><br>
+                                    <small class="text-primary">Meta mensal</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value text-success">R$ 12.500</span><br>
+                                    <small class="text-muted">Recebido</small>
+                                </td>
+                                <td>
+                                    <span class="metric-value text-warning">R$ 3.200</span><br>
+                                    <small class="text-muted">A receber</small>
+                                </td>
+                                <td>
+                                    <a href="#" onclick="openPaymentPanel()" class="btn btn-sm btn-outline-primary mr-1">
+                                        <i class="fas fa-credit-card"></i> Pagar
+                                    </a>
+                                    <a href="#" onclick="openReceiptsPanel()" class="btn btn-sm btn-outline-info">
+                                        <i class="fas fa-receipt"></i> Recibos
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Fluxo de Mentoria Simplificado -->
+                <h4 class="mb-3">
+                    <i class="fas fa-route mr-2"></i>
+                    Fluxo de Mentoria - Acesso Rápido
+                </h4>
+                <div class="row">
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <a href="https://wa.me/5521981130624" target="_blank" class="text-decoration-none">
+                            <div class="flow-step">
+                                <i class="fab fa-whatsapp"></i>
+                                <h5>WhatsApp</h5>
+                                <p>Contato Inicial</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <a href="https://calendar.google.com/calendar" target="_blank" class="text-decoration-none">
+                            <div class="flow-step">
+                                <i class="fas fa-calendar-alt"></i>
+                                <h5>Agendamento</h5>
+                                <p>Google Calendar</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <a href="https://docs.google.com/document" target="_blank" class="text-decoration-none">
+                            <div class="flow-step">
+                                <i class="fas fa-file-contract"></i>
+                                <h5>Proposta</h5>
+                                <p>Google Docs</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <a href="https://docs.google.com/document" target="_blank" class="text-decoration-none">
+                            <div class="flow-step">
+                                <i class="fas fa-handshake"></i>
+                                <h5>Contrato</h5>
+                                <p>Documentos</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <a href="#" onclick="openPaymentPanel()" class="text-decoration-none">
+                            <div class="flow-step">
+                                <i class="fas fa-credit-card"></i>
+                                <h5>Pagamentos</h5>
+                                <p>Controle Financeiro</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <a href="#" onclick="openReceiptsPanel()" class="text-decoration-none">
+                            <div class="flow-step">
+                                <i class="fas fa-receipt"></i>
+                                <h5>Recibos</h5>
+                                <p>Documentação</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ações Rápidas e Atividades Recentes -->
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="quick-actions">
+                <h4 class="mb-3">
+                    <i class="fas fa-bolt mr-2"></i>
+                    Ações Rápidas
+                </h4>
+                <a href="/admin/clients" class="quick-action-btn">
+                    <i class="fas fa-users mr-2"></i>
+                    Gerenciar Clientes
+                </a>
+                <a href="/admin/mentorships" class="quick-action-btn">
+                    <i class="fas fa-graduation-cap mr-2"></i>
+                    Gerenciar Mentorships
+                </a>
+                <a href="/admin/initiatives" class="quick-action-btn">
+                    <i class="fas fa-lightbulb mr-2"></i>
+                    Gerenciar Iniciativas
+                </a>
+                <a href="https://studio.youtube.com" target="_blank" class="quick-action-btn">
+                    <i class="fab fa-youtube mr-2"></i>
+                    YouTube Studio
+                </a>
+                <a href="https://docs.google.com/spreadsheets" target="_blank" class="quick-action-btn">
+                    <i class="fas fa-chart-line mr-2"></i>
+                    Relatórios Financeiros
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="recent-activities">
+                <h4 class="mb-3">
+                    <i class="fas fa-clock mr-2"></i>
+                    Atividades Recentes
+                </h4>
+                <div class="activity-item">
+                    <div class="activity-icon new">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div>
+                        <strong>Novo cliente adicionado</strong><br>
+                        <small class="text-muted">Maria Silva - Mentoria Individual - 2 horas atrás</small>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon update">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <div>
+                        <strong>Mentorship atualizada</strong><br>
+                        <small class="text-muted">João Santos - Status alterado para "Em Progresso" - 5 horas atrás</small>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon complete">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div>
+                        <strong>Episódio de podcast publicado</strong><br>
+                        <small class="text-muted">"Liderança Humanizada" - publicado no YouTube - 1 dia atrás</small>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon new">
+                        <i class="fas fa-calendar-plus"></i>
+                    </div>
+                    <div>
+                        <strong>Nova sessão agendada</strong><br>
+                        <small class="text-muted">Ana Paula - Sessão de mentoria para 25/05 - 2 dias atrás</small>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon update">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div>
+                        <strong>Pagamento recebido</strong><br>
+                        <small class="text-muted">Carlos Mendes - R$ 800,00 - Mentoria em Grupo - 3 dias atrás</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Painéis de Controle Específicos -->
+    <div class="row mt-4">
+        <div class="col-lg-6">
+            <div class="quick-actions">
+                <h4 class="mb-3">
+                    <i class="fas fa-chart-pie mr-2"></i>
+                    Controle de Conteúdo
+                </h4>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="text-center p-3 bg-light rounded">
+                            <i class="fas fa-microphone fa-2x text-primary mb-2"></i>
+                            <h5>6</h5>
+                            <small>Podcasts Publicados</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-center p-3 bg-light rounded">
+                            <i class="fas fa-edit fa-2x text-warning mb-2"></i>
+                            <h5>3</h5>
+                            <small>Artigos em Produção</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="quick-actions">
+                <h4 class="mb-3">
+                    <i class="fas fa-money-check-alt mr-2"></i>
+                    Resumo Financeiro
+                </h4>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="text-center p-3 bg-light rounded">
+                            <i class="fas fa-arrow-up fa-2x text-success mb-2"></i>
+                            <h5>R$ 12.500</h5>
+                            <small>Receita do Mês</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-center p-3 bg-light rounded">
+                            <i class="fas fa-clock fa-2x text-info mb-2"></i>
+                            <h5>R$ 3.200</h5>
+                            <small>Pendente</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Pagamentos -->
+<div class="modal fade" id="paymentModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-credit-card mr-2"></i>
+                    Controle de Pagamentos
+                </h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Serviço</th>
+                                <th>Valor</th>
+                                <th>Status</th>
+                                <th>Vencimento</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Maria Silva</td>
+                                <td>Mentoria Individual</td>
+                                <td>R$ 1.200,00</td>
+                                <td><span class="status-badge status-active">Pago</span></td>
+                                <td>15/05/2025</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary">Ver Recibo</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>João Santos</td>
+                                <td>Mentoria em Grupo</td>
+                                <td>R$ 800,00</td>
+                                <td><span class="status-badge status-pending">Pendente</span></td>
+                                <td>25/05/2025</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-warning">Enviar Cobrança</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Recibos -->
+<div class="modal fade" id="receiptsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-receipt mr-2"></i>
+                    Gestão de Recibos
+                </h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <button class="btn btn-primary btn-block mb-3">
+                            <i class="fas fa-plus mr-2"></i>
+                            Gerar Novo Recibo
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-outline-primary btn-block mb-3">
+                            <i class="fas fa-download mr-2"></i>
+                            Exportar Relatório
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Número</th>
+                                <th>Cliente</th>
+                                <th>Valor</th>
+                                <th>Data</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#001</td>
+                                <td>Maria Silva</td>
+                                <td>R$ 1.200,00</td>
+                                <td>15/05/2025</td>
+                                <td><span class="status-badge status-completed">Enviado</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary">Download PDF</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/export_reports.js') }}"></script>
+<script>
+function openPaymentPanel() {
+    $('#paymentModal').modal('show');
+}
+
+function openReceiptsPanel() {
+    $('#receiptsModal').modal('show');
+}
+
+// Atualizar estatísticas em tempo real (simulação)
+function updateStats() {
+    // Aqui seria feita uma chamada AJAX para buscar dados atualizados
+    console.log('Atualizando estatísticas...');
+}
+
+// Atualizar a cada 5 minutos
+setInterval(updateStats, 300000);
+
+$(document).ready(function() {
+    // Animação para os cards ao carregar
+    $('.dashboard-card').each(function(index) {
+        $(this).delay(index * 100).animate({
+            opacity: 1
+        }, 500);
+    });
+    
+    // Tooltip para elementos interativos
+    $('[title]').tooltip();
+});
+</script>
+{% endblock %}

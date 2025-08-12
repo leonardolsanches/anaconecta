@@ -1,0 +1,48 @@
+/* Sobrescreve estilos para corrigir problemas de imagem */
+
+.podcast-cover-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 6px;
+    background-image: url('/static/img/podcast-cover-1.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.profile-photo {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo-ana-conecta {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #f8f8f8;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.logo-ana-conecta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.logo-ana-conecta:after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 50%;
+    border: 2px solid rgba(52, 152, 219, 0.3);
+    pointer-events: none;
+}

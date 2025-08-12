@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="40" viewBox="0 0 150 40">
+  <style>
+    .text { 
+      font-family: 'Arial', sans-serif; 
+      font-weight: bold;
+    }
+    .primary { 
+      fill: #2D3E50; 
+    }
+    .secondary { 
+      fill: #E74C3C; 
+    }
+  </style>
+  <g>
+    <text x="5" y="27" class="text primary" font-size="24">Ana</text>
+    <text x="55" y="27" class="text secondary" font-size="24">Conecta</text>
+    <path class="secondary" d="M10,30 L140,30" stroke-width="2" stroke="#E74C3C" />
+  </g>
+</svg>
